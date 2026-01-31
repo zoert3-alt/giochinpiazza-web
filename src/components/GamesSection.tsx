@@ -216,33 +216,36 @@ export default function GamesSection() {
             </button>
           ))}
           {showAbilitaGifs && (
-            <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
+            <div key={startTime} className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
               {/* Desktop View */}
               <div className="hidden md:block w-full h-full relative">
-                {activeGifIndex === 0 ? (
+                {activeGifIndex === 0 && (
                   <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
                     <img
-                      src={`/images/games/abilita-hover-left.gif?t=${startTime}`}
-                      alt="Abilità"
+                      src="/images/games/abilita-hover-left.gif"
+                      alt="Abilità 1"
                       style={{
                         width: '350px',
                         height: '622px',
-                        objectFit: 'cover',
+                        objectFit: 'contain',
+                        backgroundColor: 'transparent',
                         borderRadius: '16px',
                         border: '3px solid #000',
                         boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
                       }}
                     />
                   </div>
-                ) : (
+                )}
+                {activeGifIndex === 1 && (
                   <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
                     <img
-                      src={`/images/games/abilita-hover.gif?t=${startTime}`}
-                      alt="Abilità"
+                      src="/images/games/abilita-hover.gif"
+                      alt="Abilità 2"
                       style={{
                         width: '350px',
                         height: '622px',
-                        objectFit: 'cover',
+                        objectFit: 'contain',
+                        backgroundColor: 'transparent',
                         borderRadius: '16px',
                         border: '3px solid #000',
                         boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
@@ -254,22 +257,36 @@ export default function GamesSection() {
 
               {/* Mobile View */}
               <div className="md:hidden flex items-center justify-center w-full h-full">
-                <img
-                  src={activeGifIndex === 0
-                    ? `/images/games/abilita-hover-left.gif?t=${startTime}`
-                    : `/images/games/abilita-hover.gif?t=${startTime}`
-                  }
-                  alt="Abilità"
-                  style={{
-                    width: '85vw',
-                    height: 'auto',
-                    maxHeight: '70vh',
-                    objectFit: 'contain',
-                    borderRadius: '16px',
-                    border: '3px solid #000',
-                    boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                  }}
-                />
+                {activeGifIndex === 0 && (
+                  <img
+                    src="/images/games/abilita-hover-left.gif"
+                    alt="Abilità 1 Mobile"
+                    style={{
+                      width: '85vw',
+                      height: 'auto',
+                      maxHeight: '70vh',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                )}
+                {activeGifIndex === 1 && (
+                  <img
+                    src="/images/games/abilita-hover.gif"
+                    alt="Abilità 2 Mobile"
+                    style={{
+                      width: '85vw',
+                      height: 'auto',
+                      maxHeight: '70vh',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                )}
               </div>
             </div>
           )}
