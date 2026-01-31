@@ -130,44 +130,26 @@ export default function GamesSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [activeGifIndex, setActiveGifIndex] = useState(0)
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
-
   const [startTime, setStartTime] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
   useEffect(() => {
     let t1: any, t2: any
     if (showAbilitaGifs) {
       setStartTime(Date.now())
-      if (isMobile) {
-        // Mobile sequence
-        setActiveGifIndex(0)
-        t1 = setTimeout(() => {
-          setActiveGifIndex(1)
-          t2 = setTimeout(() => {
-            setShowAbilitaGifs(false)
-            setActiveGifIndex(0)
-          }, 3450)
-        }, 2650)
-      } else {
-        // Desktop simultaneous
-        setActiveGifIndex(-1)
-        t1 = setTimeout(() => {
+      setActiveGifIndex(0)
+      t1 = setTimeout(() => {
+        setActiveGifIndex(1)
+        t2 = setTimeout(() => {
           setShowAbilitaGifs(false)
+          setActiveGifIndex(0)
         }, 3450)
-      }
+      }, 2650)
     }
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
     }
-  }, [showAbilitaGifs, isMobile])
+  }, [showAbilitaGifs])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
@@ -181,7 +163,7 @@ export default function GamesSection() {
   }
 
   return (
-    <section id="giochi" className="section-padding">
+    <section id="giochi" className="section-padding relative">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -292,10 +274,19 @@ export default function GamesSection() {
             Richiedi Catalogo Completo
           </button>
         </motion.div>
+      </div>
 
-        {/* Global Skill GIFs Overlay - Total clean up */}
+      {/* Global Skill GIFs Overlay - Total clean up and high z-index */}
+      <AnimatePresence>
         {showAbilitaGifs && (
-          <div key={startTime} className="fixed inset-0 pointer-events-none" style={{ zIndex: 10000 }}>
+          <motion.div
+            key={startTime}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 pointer-events-none"
+            style={{ zIndex: 100000, pointerEvents: 'none' }}
+          >
             {/* DESKTOP: Both at the same time */}
             <div className="hidden md:block w-full h-full relative">
               <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
@@ -333,9 +324,9 @@ export default function GamesSection() {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
 
       {/* Labs Video Modal */}
       {showLabsVideo && (
