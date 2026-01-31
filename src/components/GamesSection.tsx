@@ -132,12 +132,20 @@ export default function GamesSection() {
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
 
   const [startTime, setStartTime] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     let t1: any, t2: any
     if (showAbilitaGifs) {
       setStartTime(Date.now())
-      if (window.innerWidth < 768) {
+      if (isMobile) {
         // Mobile sequence
         setActiveGifIndex(0)
         t1 = setTimeout(() => {
@@ -159,7 +167,7 @@ export default function GamesSection() {
       clearTimeout(t1)
       clearTimeout(t2)
     }
-  }, [showAbilitaGifs])
+  }, [showAbilitaGifs, isMobile])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
