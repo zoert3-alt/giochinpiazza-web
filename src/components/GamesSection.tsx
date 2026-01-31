@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface GameCardProps {
@@ -128,6 +128,18 @@ export default function GamesSection() {
   const [showLabsVideo, setShowLabsVideo] = useState(false)
   const [showSlideshow, setShowSlideshow] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [activeGifIndex, setActiveGifIndex] = useState(0)
+  const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
+
+  useEffect(() => {
+    let interval: number
+    if (showAbilitaGifs) {
+      interval = window.setInterval(() => {
+        setActiveGifIndex((prev) => (prev === 0 ? 1 : 0))
+      }, 2500)
+    }
+    return () => clearInterval(interval)
+  }, [showAbilitaGifs])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
@@ -176,11 +188,16 @@ export default function GamesSection() {
                   setSelectedCategory('Esempi')
                 } else if (category === 'Info') {
                   scrollToContact()
+                } else if (category === 'Abilità') {
+                  setSelectedCategory('Abilità')
+                  setShowAbilitaGifs(!showAbilitaGifs)
                 } else {
                   setSelectedCategory(category)
                 }
               }}
-              onMouseEnter={() => setHoveredCategory(category)}
+              onMouseEnter={() => {
+                if (category !== 'Abilità') setHoveredCategory(category)
+              }}
               onMouseLeave={() => setHoveredCategory(null)}
               className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
                 ? 'bg-gradient-warm text-white shadow-lg scale-105'
@@ -190,53 +207,100 @@ export default function GamesSection() {
               {category}
             </button>
           ))}
-          {hoveredCategory === 'Abilità' && (
+          {showAbilitaGifs && (
             <>
-              <div
-                className="hidden md:block"
-                style={{
-                  position: 'fixed',
-                  top: '50%',
-                  right: '5%',
-                  transform: 'translateY(-50%)',
-                  zIndex: 100,
-                  pointerEvents: 'none'
-                }}
-              >
-                <img
-                  src="/images/games/abilita-hover.gif"
-                  alt="Abilità"
-                  style={{
-                    maxWidth: '400px',
-                    height: 'auto',
-                    borderRadius: '16px',
-                    border: '3px solid #000',
-                    boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                  }}
-                />
+              {/* Layout Desktop: Alterna tra sinistra e destra */}
+              <div className="hidden md:block">
+                <AnimatePresence mode="wait">
+                  {activeGifIndex === 0 ? (
+                    <motion.div
+                      key="left"
+                      initial={{ opacity: 0, x: -50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -50 }}
+                      style={{
+                        position: 'fixed',
+                        top: '50%',
+                        left: '5%',
+                        transform: 'translateY(-50%)',
+                        zIndex: 100,
+                        pointerEvents: 'none'
+                      }}
+                    >
+                      <img
+                        src="/images/games/abilita-hover-left.gif"
+                        alt="Abilità"
+                        style={{
+                          maxWidth: '400px',
+                          height: 'auto',
+                          borderRadius: '16px',
+                          border: '3px solid #000',
+                          boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                        }}
+                      />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="right"
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 50 }}
+                      style={{
+                        position: 'fixed',
+                        top: '50%',
+                        right: '5%',
+                        transform: 'translateY(-50%)',
+                        zIndex: 100,
+                        pointerEvents: 'none'
+                      }}
+                    >
+                      <img
+                        src="/images/games/abilita-hover.gif"
+                        alt="Abilità"
+                        style={{
+                          maxWidth: '400px',
+                          height: 'auto',
+                          borderRadius: '16px',
+                          border: '3px solid #000',
+                          boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                        }}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+
+              {/* Layout Mobile: Alterna al centro */}
               <div
-                className="hidden md:block"
+                className="md:hidden"
                 style={{
                   position: 'fixed',
                   top: '50%',
-                  left: '5%',
-                  transform: 'translateY(-50%)',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
                   zIndex: 100,
-                  pointerEvents: 'none'
+                  pointerEvents: 'none',
+                  width: '90vw'
                 }}
               >
-                <img
-                  src="/images/games/abilita-hover-left.gif"
-                  alt="Abilità"
-                  style={{
-                    maxWidth: '400px',
-                    height: 'auto',
-                    borderRadius: '16px',
-                    border: '3px solid #000',
-                    boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                  }}
-                />
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeGifIndex}
+                    src={activeGifIndex === 0 ? "/images/games/abilita-hover-left.gif" : "/images/games/abilita-hover.gif"}
+                    alt="Abilità"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                </AnimatePresence>
               </div>
             </>
           )}
