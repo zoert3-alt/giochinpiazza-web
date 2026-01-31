@@ -37,9 +37,10 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
         {/* Secondary Image */}
         {secondaryImage ? (
           <div
-            className="flex items-center justify-center bg-transparent relative overflow-hidden transition-all duration-300 mb-5"
+            className="flex items-center justify-center bg-transparent relative overflow-hidden transition-all duration-300 mb-6 aspect-video"
             style={{
-              height: isSecondaryHovered ? 'clamp(300px, 70vh, 520px)' : '210px',
+              height: isSecondaryHovered ? 'auto' : '200px',
+              maxHeight: isSecondaryHovered ? '70vh' : '200px'
             }}
           >
             <img
@@ -47,16 +48,11 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
               alt={`${type} - dettaglio`}
               onMouseEnter={() => setIsSecondaryHovered(true)}
               onMouseLeave={() => setIsSecondaryHovered(false)}
-              className="w-auto border-3 border-black rounded-lg cursor-pointer transition-all duration-300"
-              style={{
-                height: isSecondaryHovered ? '95%' : '100%',
-                maxWidth: '100%',
-                objectFit: 'contain',
-              }}
+              className="w-auto h-full max-w-full border-2 border-black rounded-lg cursor-pointer transition-all duration-300 object-contain"
             />
           </div>
         ) : (
-          <div className="h-[210px] bg-gray-400 rounded-lg flex items-center justify-center mb-5">
+          <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center mb-6">
           </div>
         )}
 

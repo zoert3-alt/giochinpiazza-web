@@ -50,20 +50,19 @@ function StatCounter({ end, suffix = '', label }: StatCounterProps) {
   }, [isVisible, end])
 
   return (
-    <div ref={ref} style={{ textAlign: 'center' }}>
+    <div ref={ref} className="flex flex-col items-center">
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         viewport={{ once: true }}
-        style={{
-          fontWeight: 700,
-          marginBottom: '0.5rem',
-          color: '#fb8500'
-        }}
+        className="text-3xl sm:text-4xl font-extrabold mb-1"
+        style={{ color: '#fb8500' }}
       >
         {count.toLocaleString()}{suffix}
       </motion.div>
-      <div style={{ fontWeight: 500, color: '#fb8500' }}>{label}</div>
+      <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white opacity-90 leading-tight">
+        {label}
+      </div>
     </div>
   )
 }
@@ -103,16 +102,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            style={{ display: 'flex', justifyContent: 'center', marginTop: '-3rem', marginBottom: '4.5rem' }}
+            className="flex justify-center mb-10 sm:mb-16 -mt-8 sm:-mt-12"
           >
             <img
               src="/images/LOGO.png"
               alt="Gioco in Piazza Logo"
-              style={{
-                height: '120px',
-                width: 'auto',
-                objectFit: 'contain'
-              }}
+              className="h-20 sm:h-28 w-auto object-contain"
             />
           </motion.div>
 
@@ -180,7 +175,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 bg-black/75 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border-2 border-white shadow-[0_0_20px_rgba(251,133,0,0.3)]"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4 bg-black/85 backdrop-blur-md rounded-[2rem] p-8 sm:p-12 border-2 border-white shadow-[0_0_30px_rgba(251,133,0,0.4)]"
           >
             <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
             <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
