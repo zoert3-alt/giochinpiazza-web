@@ -21,7 +21,7 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.4, delay }}
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
+      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
     >
       {image ? (
         <div style={{
@@ -29,7 +29,6 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'transparent',
           position: 'relative',
           overflow: 'hidden',
           transition: 'height 0.3s ease'
@@ -44,7 +43,7 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
               width: 'auto',
               maxWidth: isImageHovered ? '100%' : '90%',
               objectFit: 'contain',
-              transition: 'height 0.3s ease, max-width 0.3s ease',
+              transition: 'height 0.3s ease',
               cursor: 'pointer',
               border: '3px solid #000',
               borderRadius: '8px'
@@ -57,22 +56,13 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
         </div>
       )}
 
-      <div className={image ? "p-6" : "px-6 pb-6"}>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={isExpanded ? 'full' : 'truncated'}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="text-gray-600 mb-4 leading-relaxed"
-          >
-            {isExpanded ? description : `${description.slice(0, 120)}...`}
-          </motion.p>
-        </AnimatePresence>
-
+      <div className="p-6">
+        <p className="text-gray-600 mb-4 leading-relaxed text-sm">
+          {isExpanded ? description : `${description.slice(0, 100)}...`}
+        </p>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-terracotta-600 font-semibold text-sm hover:text-terracotta-700 transition-colors mb-4"
+          className="text-terracotta-600 font-semibold text-sm hover:text-terracotta-700 transition-colors"
         >
           {isExpanded ? 'Leggi meno' : 'Leggi tutto'}
         </button>
@@ -111,14 +101,10 @@ const games = [
 ]
 
 const slideshowImages = [
-  '/images/slideshow/slide-1.jpeg',
-  '/images/slideshow/slide-2.jpeg',
-  '/images/slideshow/slide-3.jpeg',
-  '/images/slideshow/slide-4.jpeg',
-  '/images/slideshow/slide-5.jpeg',
-  '/images/slideshow/slide-6.jpeg',
-  '/images/slideshow/slide-7.jpeg',
-  '/images/slideshow/slide-8.jpeg'
+  '/images/slideshow/slide-1.jpeg', '/images/slideshow/slide-2.jpeg',
+  '/images/slideshow/slide-3.jpeg', '/images/slideshow/slide-4.jpeg',
+  '/images/slideshow/slide-5.jpeg', '/images/slideshow/slide-6.jpeg',
+  '/images/slideshow/slide-7.jpeg', '/images/slideshow/slide-8.jpeg'
 ]
 
 export default function GamesSection() {
@@ -127,41 +113,31 @@ export default function GamesSection() {
   const [showLabsVideo, setShowLabsVideo] = useState(false)
   const [showSlideshow, setShowSlideshow] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [activeGifIndex, setActiveGifIndex] = useState(0)
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const [activeGifIndex, setActiveGifIndex] = useState(0)
 
   useEffect(() => {
     let t1: any, t2: any
     if (showAbilitaGifs) {
       setActiveGifIndex(0)
-      if (isMobile) {
-        // Mobile: Rotate sequence
+      if (window.innerWidth < 768) {
+        // Mobile sequence
         t1 = setTimeout(() => {
           setActiveGifIndex(1)
           t2 = setTimeout(() => {
             setShowAbilitaGifs(false)
+            setActiveGifIndex(0)
           }, 3450)
         }, 2650)
       } else {
-        // Desktop: Just wait for the total duration then close
+        // Desktop simultaneous show then close
         t1 = setTimeout(() => {
           setShowAbilitaGifs(false)
         }, 3450)
       }
     }
-    return () => {
-      clearTimeout(t1)
-      clearTimeout(t2)
-    }
-  }, [showAbilitaGifs, isMobile])
+    return () => { clearTimeout(t1); clearTimeout(t2); }
+  }, [showAbilitaGifs])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
@@ -169,113 +145,53 @@ export default function GamesSection() {
 
   const scrollToContact = () => {
     const element = document.querySelector('#contatti')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   return (
-    <section id="giochi" className="section-padding relative">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-12"
-        >
-          <h2 className="mb-6">
-            Il Nostro <span className="text-gradient-warm">Catalogo</span> di Giochi
-          </h2>
-          <p className="text-xl text-gray-600 leading-relaxed">
-            Oltre 25 giochi tradizionali italiani accuratamente selezionati e realizzati in legno naturale. Ogni gioco racconta una storia e crea un'esperienza unica di connessione e divertimento.
-          </p>
-        </motion.div>
+    <section id="giochi" className="py-20 relative px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4">Il Nostro Catalogo di Giochi</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto italic">Oltre 25 giochi tradizionali italiani in legno naturale.</p>
+        </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12 relative z-10">
-          {categories.map((category) => (
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12 relative z-[100]">
+          {categories.map((cat) => (
             <button
-              key={category}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (category === 'Labs') {
-                  setShowLabsVideo(true)
-                } else if (category === 'Esempi') {
-                  setShowSlideshow(true)
-                  setCurrentSlide(0)
-                  setSelectedCategory('Esempi')
-                } else if (category === 'Info') {
-                  scrollToContact()
-                } else if (category === 'Abilità') {
-                  setSelectedCategory('Abilità')
-                  setShowAbilitaGifs(true) // Force start
-                } else {
-                  setSelectedCategory(category)
-                }
+              key={cat}
+              onClick={() => {
+                if (cat === 'Labs') setShowLabsVideo(true)
+                else if (cat === 'Esempi') { setShowSlideshow(true); setSelectedCategory('Esempi'); }
+                else if (cat === 'Info') scrollToContact()
+                else if (cat === 'Abilità') { setSelectedCategory('Abilità'); setShowAbilitaGifs(true); }
+                else setSelectedCategory(cat)
               }}
-              onMouseEnter={() => {
-                if (category !== 'Abilità') setHoveredCategory(category)
-              }}
+              onMouseEnter={() => { if (cat !== 'Abilità') setHoveredCategory(cat) }}
               onMouseLeave={() => setHoveredCategory(null)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 relative z-20 ${selectedCategory === category
-                ? 'bg-gradient-warm text-white shadow-lg scale-105'
-                : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
-                }`}
+              className={`px-6 py-2 rounded-full font-bold transition-all ${selectedCategory === cat
+                ? 'bg-[#fb8500] text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 border-2 border-gray-100 hover:border-[#fb8500]'}`}
             >
-              {category}
+              {cat}
             </button>
           ))}
+
           {hoveredCategory === 'Labs' && (
-            <div
-              style={{
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 1000,
-                pointerEvents: 'none',
-                padding: '20px',
-                backgroundColor: 'rgba(0, 0, 0, 0.85)',
-                borderRadius: '16px',
-                border: '3px solid #000',
-                boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500',
-                textAlign: 'center',
-                maxWidth: '400px'
-              }}
-            >
-              <p style={{ color: '#fb8500', marginBottom: '10px', fontSize: '1.2rem' }}>
-                Organizziamo laboratori per ideazione e costruzione di giochi in legno nella location da voi stabilita. Per informazioni clicca su "Richiedi Preventivo Gratuito" o "Richiedi catalogo completo".
-              </p>
-              <p style={{ color: '#fb8500', fontSize: '1rem', fontStyle: 'italic' }}>
-                Clicca per vedere il video
-              </p>
+            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 text-[#fb8500] p-6 rounded-2xl border-2 border-[#fb8500] z-[1000] text-center max-w-sm pointer-events-none">
+              <p>Organizziamo laboratori di costruzione giochi in legno. Clicca per vedere il video!</p>
             </div>
           )}
         </div>
 
-        {/* Games Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-0">
+        {/* Games list */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence>
             {filteredGames.map((game, idx) => (
-              <GameCard
-                key={game.name}
-                {...game}
-                delay={idx * 0.05}
-              />
+              <GameCard key={game.name} {...game} delay={idx * 0.1} />
             ))}
           </AnimatePresence>
-        </div>
-
-        <div className="text-center mt-16">
-          <p className="text-gray-600 mb-6 text-lg">
-            Non hai trovato quello che cercavi? Abbiamo molti altri giochi disponibili!
-          </p>
-          <button
-            onClick={scrollToContact}
-            className="px-8 py-4 bg-white text-terracotta-600 rounded-full font-semibold hover:shadow-lg transition-all border-2 border-terracotta-200 hover:border-terracotta-400"
-          >
-            Richiedi Catalogo Completo
-          </button>
         </div>
       </div>
 
@@ -283,112 +199,51 @@ export default function GamesSection() {
       <AnimatePresence>
         {showAbilitaGifs && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 pointer-events-none"
-            style={{ zIndex: 999999, pointerEvents: 'none' }}
+            style={{ zIndex: 999999 }}
           >
-            {/* DESKTOP: Both side by side */}
-            {!isMobile && (
-              <div className="w-full h-full relative">
-                <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
-                  <img
-                    src="/images/games/abilita-hover-left.gif"
-                    alt=""
-                    style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
-                  />
-                </div>
-                <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
-                  <img
-                    src="/images/games/abilita-hover.gif"
-                    alt=""
-                    style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
-                  />
-                </div>
+            {/* DESKTOP VIEW */}
+            <div className="hidden md:block w-full h-full relative">
+              <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
+                <img src="/images/games/abilita-hover-left.gif" className="w-[350px] h-[622px] object-contain rounded-2xl border-4 border-black shadow-[0_0_30px_#fb8500]" />
               </div>
-            )}
+              <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
+                <img src="/images/games/abilita-hover.gif" className="w-[350px] h-[622px] object-contain rounded-2xl border-4 border-black shadow-[0_0_30px_#fb8500]" />
+              </div>
+            </div>
 
-            {/* MOBILE: Sequential centered */}
-            {isMobile && (
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="relative w-[85vw] flex items-center justify-center">
-                  {activeGifIndex === 0 ? (
-                    <img
-                      src="/images/games/abilita-hover-left.gif"
-                      alt=""
-                      style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
-                    />
-                  ) : (
-                    <img
-                      src="/images/games/abilita-hover.gif"
-                      alt=""
-                      style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
-                    />
-                  )}
-                </div>
+            {/* MOBILE VIEW */}
+            <div className="md:hidden flex items-center justify-center w-full h-full">
+              <div className="relative w-[85vw] flex items-center justify-center">
+                <img
+                  src={activeGifIndex === 0 ? "/images/games/abilita-hover-left.gif" : "/images/games/abilita-hover.gif"}
+                  className="w-full h-auto max-h-[70vh] object-contain rounded-2xl border-4 border-black shadow-[0_0_30px_#fb8500]"
+                />
               </div>
-            )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* MODALS */}
+      {/* VIDEO MODAL */}
       {showLabsVideo && (
-        <div
-          className="fixed inset-0 bg-black/85 flex items-center justify-center z-[2000]"
-          onClick={() => setShowLabsVideo(false)}
-        >
-          <div
-            className="relative rounded-2xl border-3 border-black shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <iframe
-              width="350"
-              height="622"
-              src="https://www.youtube.com/embed/xuZw-WtLa1M"
-              title="Labs Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-            <button
-              onClick={() => setShowLabsVideo(false)}
-              className="absolute top-2 right-2 bg-black/75 text-white border-2 border-white rounded-full w-9 h-9 flex items-center justify-center"
-            >✕</button>
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[5000]" onClick={() => setShowLabsVideo(false)}>
+          <div className="relative rounded-2xl overflow-hidden border-4 border-black shadow-2xl" onClick={e => e.stopPropagation()}>
+            <iframe width="350" height="622" src="https://www.youtube.com/embed/xuZw-WtLa1M" frameBorder="0" allowFullScreen />
+            <button onClick={() => setShowLabsVideo(false)} className="absolute top-4 right-4 text-white bg-black/50 w-10 h-10 rounded-full border-2 border-white">✕</button>
           </div>
         </div>
       )}
 
+      {/* SLIDESHOW MODAL */}
       {showSlideshow && (
-        <div
-          className="fixed inset-0 bg-black/90 flex items-center justify-center z-[2000]"
-          onClick={() => setShowSlideshow(false)}
-        >
-          <div
-            className="relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={slideshowImages[currentSlide]}
-              alt={`Slide ${currentSlide + 1}`}
-              className="max-w-[90vw] max-h-[80vh] object-contain rounded-2xl border-3 border-black shadow-2xl"
-            />
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev === 0 ? slideshowImages.length - 1 : prev - 1))}
-              className="absolute -left-16 top-1/2 -translate-y-1/2 text-[#fb8500] text-4xl"
-            >‹</button>
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev === slideshowImages.length - 1 ? 0 : prev + 1))}
-              className="absolute -right-16 top-1/2 -translate-y-1/2 text-[#fb8500] text-4xl"
-            >›</button>
-            <button
-              onClick={() => setShowSlideshow(false)}
-              className="absolute -top-10 -right-10 text-white text-3xl"
-            >✕</button>
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[#fb8500]">
-              {currentSlide + 1} / {slideshowImages.length}
-            </div>
+        <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-[5000]" onClick={() => setShowSlideshow(false)}>
+          <div className="relative max-w-4xl px-4" onClick={e => e.stopPropagation()}>
+            <img src={slideshowImages[currentSlide]} className="max-h-[80vh] w-auto rounded-xl border-4 border-black shadow-2xl" />
+            <button onClick={() => setCurrentSlide(p => (p === 0 ? slideshowImages.length - 1 : p - 1))} className="absolute left-0 top-1/2 -translate-y-1/2 text-white text-5xl">‹</button>
+            <button onClick={() => setCurrentSlide(p => (p === slideshowImages.length - 1 ? 0 : p + 1))} className="absolute right-0 top-1/2 -translate-y-1/2 text-white text-5xl">›</button>
+            <button onClick={() => setShowSlideshow(false)} className="absolute -top-12 right-0 text-white text-3xl">Chiudi ✕</button>
           </div>
         </div>
       )}
