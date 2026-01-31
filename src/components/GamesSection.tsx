@@ -25,20 +25,31 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
     >
       {/* Image or Icon Header */}
       {image ? (
-        <div
-          className="relative bg-gray-50 flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out p-6"
-          style={{
-            height: isImageHovered ? '450px' : '260px',
-          }}
-        >
+        <div style={{
+          height: isImageHovered ? '550px' : '280px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'transparent',
+          position: 'relative',
+          overflow: 'hidden',
+          transition: 'height 0.3s ease'
+        }}>
           <img
             src={image}
             alt={name}
             onMouseEnter={() => setIsImageHovered(true)}
             onMouseLeave={() => setIsImageHovered(false)}
-            className="max-w-full max-h-full w-auto h-auto object-contain border-2 border-black rounded-lg cursor-pointer transition-transform duration-500 shadow-md"
             style={{
-              transform: isImageHovered ? 'scale(1.05)' : 'scale(1)',
+              height: isImageHovered ? '500px' : '220px',
+              width: 'auto',
+              maxWidth: '95%',
+              objectFit: 'contain',
+              transition: 'height 0.3s ease, max-width 0.3s ease',
+              cursor: 'pointer',
+              border: '3px solid #000',
+              borderRadius: '8px',
+              boxShadow: isImageHovered ? '0 0 20px rgba(251,133,0,0.4)' : 'none'
             }}
           />
         </div>

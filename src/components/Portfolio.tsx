@@ -36,26 +36,36 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
       <div className="p-6">
         {/* Secondary Image */}
         {secondaryImage ? (
-          <div
-            className="relative bg-gray-50 flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out p-6 mb-6"
-            style={{
-              height: isSecondaryHovered ? '450px' : '260px',
-            }}
-          >
+          <div style={{
+            height: isSecondaryHovered ? '520px' : '260px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'transparent',
+            position: 'relative',
+            overflow: 'hidden',
+            transition: 'height 0.3s ease',
+            marginBottom: '20px'
+          }}>
             <img
               src={secondaryImage}
               alt={`${type} - dettaglio`}
               onMouseEnter={() => setIsSecondaryHovered(true)}
               onMouseLeave={() => setIsSecondaryHovered(false)}
-              className="max-w-full max-h-full w-auto h-auto object-contain border-2 border-black rounded-lg cursor-pointer transition-transform duration-500 shadow-md"
               style={{
-                transform: isSecondaryHovered ? 'scale(1.05)' : 'scale(1)',
+                height: isSecondaryHovered ? '470px' : '210px',
+                width: 'auto',
+                maxWidth: isSecondaryHovered ? '100%' : '90%',
+                objectFit: 'contain',
+                border: '3px solid #000',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                transition: 'height 0.3s ease'
               }}
             />
           </div>
         ) : (
-          <div className="h-[260px] bg-gray-100 rounded-lg flex items-center justify-center mb-6">
-          </div>
+          <div style={{ height: '260px', backgroundColor: '#f3f4f6', borderRadius: '8px' }}></div>
         )}
 
         <div className="flex justify-center">
