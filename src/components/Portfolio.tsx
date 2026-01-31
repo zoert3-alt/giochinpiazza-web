@@ -22,14 +22,14 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
-      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform md:hover:-translate-y-1 border border-gray-100"
+      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
     >
       {/* Title Image */}
       <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
         <img
           src="/images/portfolio/portfolio-title.png"
           alt=""
-          className="h-20 w-auto max-w-full object-contain"
+          style={{ height: '80px', width: 'auto', maxWidth: '100%', objectFit: 'contain' }}
         />
       </div>
 
@@ -57,23 +57,24 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
                 width: 'auto',
                 maxWidth: isSecondaryHovered ? '100%' : '90%',
                 objectFit: 'contain',
-                border: '3px solid #000',
-                borderRadius: '8px',
+                transition: 'height 0.3s ease, max-width 0.3s ease',
                 cursor: 'pointer',
-                transition: 'height 0.3s ease'
+                border: '3px solid #000',
+                borderRadius: '8px'
               }}
             />
           </div>
         ) : (
-          <div style={{ height: '260px', backgroundColor: '#f3f4f6', borderRadius: '8px' }}></div>
+          <div style={{ height: '260px', backgroundColor: '#9ca3af', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+          </div>
         )}
 
-        <div className="flex justify-center">
-          <div className="bg-black/75 p-4 rounded-2xl max-w-[95%] border-2 border-white shadow-[0_0_15px_rgba(251,133,0,0.4)]">
-            <p className="text-[#fb8500] italic text-[0.85rem] leading-relaxed mb-1">
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)', padding: '10px 12px', borderRadius: '16px', maxWidth: '85%', border: '2px solid white', boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500' }}>
+            <p style={{ color: '#fb8500', fontStyle: 'italic', fontSize: '0.8rem', lineHeight: '1.5', marginBottom: '4px' }}>
               "{testimonial.quote}"
             </p>
-            <p className="text-[#fb8500] text-[0.75rem] font-bold">
+            <p style={{ color: '#fb8500', fontSize: '0.7rem', fontWeight: 'bold' }}>
               — {testimonial.author}, {testimonial.role}
             </p>
           </div>

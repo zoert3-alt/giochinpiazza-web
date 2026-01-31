@@ -126,9 +126,9 @@ export default function Contact() {
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Nome e Cognome *
@@ -160,7 +160,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Telefono
@@ -184,7 +184,7 @@ export default function Contact() {
                       required
                       value={formData.eventType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white text-left"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white"
                     >
                       <option value="">Seleziona tipo evento</option>
                       {eventTypes.map((type) => (
@@ -194,9 +194,9 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2 text-left">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Data Prevista
                     </label>
                     <input
@@ -224,7 +224,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Numero Partecipanti Stimato *
@@ -355,7 +355,16 @@ export default function Contact() {
                     Operiamo in tutta Italia
                   </span>
                   {isMapHovered && (
-                    <div className="hidden lg:block lg:absolute lg:top-full lg:left-1/2 lg:-translate-x-1/2 lg:pt-1 lg:z-50">
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        paddingTop: '5px',
+                        zIndex: 50
+                      }}
+                    >
                       <div
                         style={{
                           padding: '10px',

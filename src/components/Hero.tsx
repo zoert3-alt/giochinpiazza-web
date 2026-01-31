@@ -50,16 +50,20 @@ function StatCounter({ end, suffix = '', label }: StatCounterProps) {
   }, [isVisible, end])
 
   return (
-    <div ref={ref} className="flex flex-col items-center justify-center py-4 sm:py-6">
+    <div ref={ref} style={{ textAlign: 'center' }}>
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         viewport={{ once: true }}
-        className="text-3xl sm:text-5xl font-bold mb-2 text-[#fb8500]"
+        style={{
+          fontWeight: 700,
+          marginBottom: '0.5rem',
+          color: '#fb8500'
+        }}
       >
         {count.toLocaleString()}{suffix}
       </motion.div>
-      <div className="font-medium text-[#fb8500] text-[10px] sm:text-base uppercase tracking-wider">{label}</div>
+      <div style={{ fontWeight: 500, color: '#fb8500' }}>{label}</div>
     </div>
   )
 }
@@ -73,20 +77,42 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative pt-32 pb-16 overflow-hidden bg-transparent">
-      <div className="max-w-7xl mx-auto px-4 relative">
-        <div className="max-w-4xl mx-auto text-center">
+    <section style={{
+      position: 'relative',
+      paddingTop: '8rem',
+      paddingBottom: '4rem',
+      overflow: 'hidden',
+      backgroundColor: 'transparent'
+    }}>
+      <div style={{
+        maxWidth: '80rem',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+        position: 'relative'
+      }}>
+        <div style={{
+          maxWidth: '64rem',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          textAlign: 'center'
+        }}>
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex justify-center -mt-12 mb-12"
+            style={{ display: 'flex', justifyContent: 'center', marginTop: '-3rem', marginBottom: '4.5rem' }}
           >
             <img
               src="/images/LOGO.png"
               alt="Gioco in Piazza Logo"
-              className="h-[120px] w-auto object-contain"
+              style={{
+                height: '120px',
+                width: 'auto',
+                objectFit: 'contain'
+              }}
             />
           </motion.div>
 
@@ -95,10 +121,16 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-extrabold text-center mb-8 leading-[1.1]"
+            style={{
+              fontWeight: 800,
+              color: 'white',
+              marginBottom: '2rem',
+              lineHeight: 1.1,
+              textAlign: 'center'
+            }}
           >
             Trasformiamo{' '}
-            <span className="text-gradient-warm pointer-events-none">piazze e spazi</span>
+            <span className="text-gradient-warm" style={{ pointerEvents: 'none' }}>piazze e spazi</span>
             {' '}in arene di gioco dove generazioni si incontrano
           </motion.h1>
 
@@ -107,10 +139,16 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-12 max-w-3xl mx-auto text-center"
+            style={{
+              marginBottom: '3rem',
+              maxWidth: '48rem',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              textAlign: 'center'
+            }}
           >
-            <div className="bg-black/80 px-4 py-8 sm:p-10 rounded-[2.5rem] inline-block border-2 border-white shadow-[0_0_10px_#fff,0_0_20px_#fff,0_0_30px_#fb8500,0_0_40px_#fb8500]">
-              <p className="text-[#fb8500] leading-relaxed m-0 text-lg sm:text-2xl font-bold">
+            <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)', padding: '12px 16px', borderRadius: '16px', display: 'inline-block', border: '2px solid white', boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500' }}>
+              <p style={{ color: '#fb8500', lineHeight: 1.7 }}>
                 Eventi ludici indimenticabili con giochi tradizionali di legno per aziende, festival, matrimoni e celebrazioni. Creiamo momenti di connessione autentica che trasformano sconosciuti in comunità.
               </p>
             </div>
@@ -121,27 +159,67 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 sm:mb-24"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              gap: '1rem',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '5rem'
+            }}
           >
             <button
               onClick={() => scrollToSection('#contatti')}
-              className="w-full sm:w-auto px-6 py-4"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '1rem 2rem',
+                backgroundColor: 'white',
+                color: '#1f2937',
+                fontWeight: 600,
+                borderRadius: '9999px',
+                border: '2px solid #e5e7eb',
+                cursor: 'pointer'
+              }}
             >
               Richiedi Preventivo Gratuito
             </button>
             <button
               onClick={() => scrollToSection('#portfolio')}
-              className="w-full sm:w-auto px-6 py-4"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '1rem 2rem',
+                backgroundColor: 'white',
+                color: '#1f2937',
+                fontWeight: 600,
+                borderRadius: '9999px',
+                border: '2px solid #e5e7eb',
+                cursor: 'pointer'
+              }}
             >
               Guarda i Nostri Eventi
             </button>
           </motion.div>
 
+          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-10 bg-black/85 backdrop-blur-sm rounded-[3rem] p-10 sm:p-16 border-2 border-white shadow-[0_0_40px_rgba(251,133,0,0.5)] mx-2 sm:mx-0"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '2rem',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              borderRadius: '16px',
+              padding: '2rem',
+              border: '2px solid white',
+              boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+            }}
           >
             <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
             <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
