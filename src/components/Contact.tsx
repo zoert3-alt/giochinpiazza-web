@@ -184,9 +184,9 @@ export default function Contact() {
                       required
                       value={formData.eventType}
                       onChange={handleChange}
-                      className="w-full px-2 sm:px-4 py-2 text-sm sm:text-base rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white overflow-hidden text-ellipsis"
+                      className="w-full max-w-full px-2 py-2 text-sm sm:text-base rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white"
                     >
-                      <option value="">Seleziona tipo evento</option>
+                      <option value="">Tipo di evento</option>
                       {eventTypes.map((type) => (
                         <option key={type} value={type}>{type}</option>
                       ))}
