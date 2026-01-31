@@ -131,17 +131,20 @@ export default function GamesSection() {
   const [activeGifIndex, setActiveGifIndex] = useState(0)
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
 
+  const [startTime, setStartTime] = useState(0)
+
   useEffect(() => {
     if (showAbilitaGifs) {
+      setStartTime(Date.now())
       setActiveGifIndex(0)
       const timer1 = setTimeout(() => {
         setActiveGifIndex(1)
         const timer2 = setTimeout(() => {
           setShowAbilitaGifs(false)
           setActiveGifIndex(0)
-        }, 3450) // Durata originale della seconda GIF
+        }, 3450)
         return () => clearTimeout(timer2)
-      }, 2650) // Durata originale della prima GIF
+      }, 2650)
       return () => clearTimeout(timer1)
     }
   }, [showAbilitaGifs])
@@ -216,75 +219,57 @@ export default function GamesSection() {
             <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
               {/* Desktop View */}
               <div className="hidden md:block w-full h-full relative">
-                <AnimatePresence mode="wait">
-                  {activeGifIndex === 0 ? (
-                    <motion.div
-                      key="desktop-left"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      className="absolute top-1/2 left-[5%] -translate-y-1/2"
-                    >
-                      <img
-                        src="/images/games/abilita-hover-left.gif"
-                        alt="Abilità"
-                        style={{
-                          width: '350px',
-                          height: '622px',
-                          objectFit: 'cover',
-                          borderRadius: '16px',
-                          border: '3px solid #000',
-                          boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                        }}
-                      />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="desktop-right"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      className="absolute top-1/2 right-[5%] -translate-y-1/2"
-                    >
-                      <img
-                        src="/images/games/abilita-hover.gif"
-                        alt="Abilità"
-                        style={{
-                          width: '350px',
-                          height: '622px',
-                          objectFit: 'cover',
-                          borderRadius: '16px',
-                          border: '3px solid #000',
-                          boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                        }}
-                      />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {activeGifIndex === 0 ? (
+                  <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
+                    <img
+                      src={`/images/games/abilita-hover-left.gif?t=${startTime}`}
+                      alt="Abilità"
+                      style={{
+                        width: '350px',
+                        height: '622px',
+                        objectFit: 'cover',
+                        borderRadius: '16px',
+                        border: '3px solid #000',
+                        boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
+                    <img
+                      src={`/images/games/abilita-hover.gif?t=${startTime}`}
+                      alt="Abilità"
+                      style={{
+                        width: '350px',
+                        height: '622px',
+                        objectFit: 'cover',
+                        borderRadius: '16px',
+                        border: '3px solid #000',
+                        boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                      }}
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Mobile View */}
               <div className="md:hidden flex items-center justify-center w-full h-full">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={activeGifIndex === 0 ? "mobile-left" : "mobile-right"}
-                    src={activeGifIndex === 0 ? "/images/games/abilita-hover-left.gif" : "/images/games/abilita-hover.gif"}
-                    alt="Abilità"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.4 }}
-                    style={{
-                      width: '85vw',
-                      height: 'auto',
-                      maxHeight: '70vh',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
-                  />
-                </AnimatePresence>
+                <img
+                  src={activeGifIndex === 0
+                    ? `/images/games/abilita-hover-left.gif?t=${startTime}`
+                    : `/images/games/abilita-hover.gif?t=${startTime}`
+                  }
+                  alt="Abilità"
+                  style={{
+                    width: '85vw',
+                    height: 'auto',
+                    maxHeight: '70vh',
+                    objectFit: 'contain',
+                    borderRadius: '16px',
+                    border: '3px solid #000',
+                    boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                  }}
+                />
               </div>
             </div>
           )}
