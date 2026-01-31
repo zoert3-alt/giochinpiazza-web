@@ -50,20 +50,18 @@ function StatCounter({ end, suffix = '', label }: StatCounterProps) {
   }, [isVisible, end])
 
   return (
-    <div ref={ref} style={{ textAlign: 'center' }}>
+    <div ref={ref} className="flex flex-col items-center justify-center p-4 sm:p-6">
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         viewport={{ once: true }}
-        style={{
-          fontWeight: 700,
-          marginBottom: '0.5rem',
-          color: '#fb8500'
-        }}
+        className="text-3xl sm:text-5xl font-extrabold mb-1 tracking-tight text-[#fb8500]"
       >
         {count.toLocaleString()}{suffix}
       </motion.div>
-      <div style={{ fontWeight: 500, color: '#fb8500' }}>{label}</div>
+      <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#fb8500] text-center opacity-90">
+        {label}
+      </div>
     </div>
   )
 }
@@ -205,17 +203,19 @@ export default function Hero() {
             </button>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 bg-black/75 backdrop-blur-sm rounded-3xl p-8 sm:p-16 border-2 border-white shadow-[0_0_20px_#fff,0_0_30px_#fb8500,0_0_40px_#fb8500] mx-2 sm:mx-0"
-          >
-            <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
-            <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
-            <StatCounter end={50000} suffix="+" label="Partecipanti Felici" />
-            <StatCounter end={15} suffix="+" label="Anni di Esperienza" />
-          </motion.div>
+          <div className="px-4 sm:px-0">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-10 bg-black/85 backdrop-blur-sm rounded-[2rem] p-6 sm:p-12 border-2 border-white shadow-[0_0_20px_#fff,0_0_30px_#fb8500,0_0_40px_#fb8500]"
+            >
+              <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
+              <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
+              <StatCounter end={50000} suffix="+" label="Partecipanti Felici" />
+              <StatCounter end={15} suffix="+" label="Anni di Esperienza" />
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
