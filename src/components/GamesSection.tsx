@@ -152,8 +152,12 @@ export default function GamesSection() {
     <section id="giochi" className="py-20 relative px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Il Nostro Catalogo di Giochi</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto italic">Oltre 25 giochi tradizionali italiani in legno naturale.</p>
+          <h2 className="text-4xl font-bold mb-4">
+            Il Nostro <span className="text-gradient-warm">Catalogo</span> di Giochi
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Oltre 25 giochi tradizionali italiani accuratamente selezionati e realizzati in legno naturale. Ogni gioco racconta una storia e crea un'esperienza unica di connessione e divertimento.
+          </p>
         </div>
 
         {/* Filter Buttons */}
@@ -192,6 +196,18 @@ export default function GamesSection() {
               <GameCard key={game.name} {...game} delay={idx * 0.1} />
             ))}
           </AnimatePresence>
+        </div>
+
+        <div className="text-center mt-16">
+          <p className="text-gray-600 mb-6 text-lg">
+            Non hai trovato quello che cercavi? Abbiamo molti altri giochi disponibili!
+          </p>
+          <button
+            onClick={scrollToContact}
+            className="px-8 py-4 bg-white text-terracotta-600 rounded-full font-semibold hover:shadow-lg transition-all border-2 border-terracotta-200 hover:border-terracotta-400"
+          >
+            Richiedi Catalogo Completo
+          </button>
         </div>
       </div>
 
