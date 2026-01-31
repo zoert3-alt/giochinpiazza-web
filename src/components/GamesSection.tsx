@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface GameCardProps {
@@ -7,7 +7,7 @@ interface GameCardProps {
   description: string
   players: string
   age: string
-  image?: string
+  image?: string // Path to image in public folder, e.g. "/images/games/rana.png"
   delay: number
 }
 
@@ -21,14 +21,16 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.4, delay }}
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
     >
+      {/* Image or Icon Header */}
       {image ? (
         <div style={{
           height: isImageHovered ? '600px' : '300px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundColor: 'transparent',
           position: 'relative',
           overflow: 'hidden',
           transition: 'height 0.3s ease'
@@ -43,7 +45,7 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
               width: 'auto',
               maxWidth: isImageHovered ? '100%' : '90%',
               objectFit: 'contain',
-              transition: 'height 0.3s ease',
+              transition: 'height 0.3s ease, max-width 0.3s ease',
               cursor: 'pointer',
               border: '3px solid #000',
               borderRadius: '8px'
@@ -56,13 +58,22 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
         </div>
       )}
 
-      <div className="p-6">
-        <p className="text-gray-600 mb-4 leading-relaxed text-sm">
-          {isExpanded ? description : `${description.slice(0, 100)}...`}
-        </p>
+      <div className={image ? "p-6" : "px-6 pb-6"}>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={isExpanded ? 'full' : 'truncated'}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="text-gray-600 mb-4 leading-relaxed"
+          >
+            {isExpanded ? description : `${description.slice(0, 120)}...`}
+          </motion.p>
+        </AnimatePresence>
+
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-terracotta-600 font-semibold text-sm hover:text-terracotta-700 transition-colors"
+          className="text-terracotta-600 font-semibold text-sm hover:text-terracotta-700 transition-colors mb-4"
         >
           {isExpanded ? 'Leggi meno' : 'Leggi tutto'}
         </button>
@@ -101,10 +112,14 @@ const games = [
 ]
 
 const slideshowImages = [
-  '/images/slideshow/slide-1.jpeg', '/images/slideshow/slide-2.jpeg',
-  '/images/slideshow/slide-3.jpeg', '/images/slideshow/slide-4.jpeg',
-  '/images/slideshow/slide-5.jpeg', '/images/slideshow/slide-6.jpeg',
-  '/images/slideshow/slide-7.jpeg', '/images/slideshow/slide-8.jpeg'
+  '/images/slideshow/slide-1.jpeg',
+  '/images/slideshow/slide-2.jpeg',
+  '/images/slideshow/slide-3.jpeg',
+  '/images/slideshow/slide-4.jpeg',
+  '/images/slideshow/slide-5.jpeg',
+  '/images/slideshow/slide-6.jpeg',
+  '/images/slideshow/slide-7.jpeg',
+  '/images/slideshow/slide-8.jpeg'
 ]
 
 export default function GamesSection() {
@@ -113,31 +128,6 @@ export default function GamesSection() {
   const [showLabsVideo, setShowLabsVideo] = useState(false)
   const [showSlideshow, setShowSlideshow] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
-  const [activeGifIndex, setActiveGifIndex] = useState(0)
-
-  useEffect(() => {
-    let t1: any, t2: any
-    if (showAbilitaGifs) {
-      setActiveGifIndex(0)
-      if (window.innerWidth < 768) {
-        // Mobile sequence
-        t1 = setTimeout(() => {
-          setActiveGifIndex(1)
-          t2 = setTimeout(() => {
-            setShowAbilitaGifs(false)
-            setActiveGifIndex(0)
-          }, 3450)
-        }, 2650)
-      } else {
-        // Desktop simultaneous show then close
-        t1 = setTimeout(() => {
-          setShowAbilitaGifs(false)
-        }, 3450)
-      }
-    }
-    return () => { clearTimeout(t1); clearTimeout(t2); }
-  }, [showAbilitaGifs])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
@@ -145,105 +135,347 @@ export default function GamesSection() {
 
   const scrollToContact = () => {
     const element = document.querySelector('#contatti')
-    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }
 
   return (
-    <section id="giochi" className="py-20 relative px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Il Nostro Catalogo di Giochi</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto italic">Oltre 25 giochi tradizionali italiani in legno naturale.</p>
-        </div>
+    <section id="giochi" className="section-padding">
+      <div className="container-custom">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
+          <h2 className="mb-6">
+            Il Nostro <span className="text-gradient-warm">Catalogo</span> di Giochi
+          </h2>
+          <p className="text-xl text-gray-600 leading-relaxed">
+            Oltre 25 giochi tradizionali italiani accuratamente selezionati e realizzati in legno naturale. Ogni gioco racconta una storia e crea un'esperienza unica di connessione e divertimento.
+          </p>
+        </motion.div>
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12 relative z-[100]">
-          {categories.map((cat) => (
+        {/* Category Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          {categories.map((category) => (
             <button
-              key={cat}
+              key={category}
               onClick={() => {
-                if (cat === 'Labs') setShowLabsVideo(true)
-                else if (cat === 'Esempi') { setShowSlideshow(true); setSelectedCategory('Esempi'); }
-                else if (cat === 'Info') scrollToContact()
-                else if (cat === 'Abilità') { setSelectedCategory('Abilità'); setShowAbilitaGifs(true); }
-                else setSelectedCategory(cat)
+                if (category === 'Labs') {
+                  setShowLabsVideo(true)
+                } else if (category === 'Esempi') {
+                  setShowSlideshow(true)
+                  setCurrentSlide(0)
+                  setSelectedCategory('Esempi')
+                } else if (category === 'Info') {
+                  scrollToContact()
+                } else {
+                  setSelectedCategory(category)
+                }
               }}
-              onMouseEnter={() => { if (cat !== 'Abilità') setHoveredCategory(cat) }}
+              onMouseEnter={() => setHoveredCategory(category)}
               onMouseLeave={() => setHoveredCategory(null)}
-              className={`px-6 py-2 rounded-full font-bold transition-all ${selectedCategory === cat
-                ? 'bg-[#fb8500] text-white shadow-lg scale-105'
-                : 'bg-white text-gray-700 border-2 border-gray-100 hover:border-[#fb8500]'}`}
+              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
+                  ? 'bg-gradient-warm text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
+                }`}
             >
-              {cat}
+              {category}
             </button>
           ))}
-
+          {hoveredCategory === 'Abilità' && (
+            <>
+              <div
+                style={{
+                  position: 'fixed',
+                  top: '50%',
+                  right: '5%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 100,
+                  pointerEvents: 'none'
+                }}
+              >
+                <img
+                  src="/images/games/abilita-hover.gif"
+                  alt="Abilità"
+                  style={{
+                    maxWidth: '400px',
+                    height: 'auto',
+                    borderRadius: '16px',
+                    border: '3px solid #000',
+                    boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  position: 'fixed',
+                  top: '50%',
+                  left: '5%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 100,
+                  pointerEvents: 'none'
+                }}
+              >
+                <img
+                  src="/images/games/abilita-hover-left.gif"
+                  alt="Abilità"
+                  style={{
+                    maxWidth: '400px',
+                    height: 'auto',
+                    borderRadius: '16px',
+                    border: '3px solid #000',
+                    boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                  }}
+                />
+              </div>
+            </>
+          )}
           {hoveredCategory === 'Labs' && (
-            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 text-[#fb8500] p-6 rounded-2xl border-2 border-[#fb8500] z-[1000] text-center max-w-sm pointer-events-none">
-              <p>Organizziamo laboratori di costruzione giochi in legno. Clicca per vedere il video!</p>
+            <div
+              style={{
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 100,
+                pointerEvents: 'none',
+                padding: '20px',
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                borderRadius: '16px',
+                border: '3px solid #000',
+                boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500',
+                textAlign: 'center',
+                maxWidth: '400px'
+              }}
+            >
+              <p style={{ color: '#fb8500', marginBottom: '10px', fontSize: '1.2rem' }}>
+                Organizziamo laboratori per ideazione e costruzione di giochi in legno nella location da voi stabilita. Per informazioni clicca su "Richiedi Preventivo Gratuito" o "Richiedi catalogo completo".
+              </p>
+              <p style={{ color: '#fb8500', fontSize: '1rem', fontStyle: 'italic' }}>
+                Clicca per vedere il video
+              </p>
             </div>
           )}
-        </div>
+        </motion.div>
 
-        {/* Games list */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Games Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {filteredGames.map((game, idx) => (
-              <GameCard key={game.name} {...game} delay={idx * 0.1} />
+              <GameCard
+                key={game.name}
+                {...game}
+                delay={idx * 0.05}
+              />
             ))}
           </AnimatePresence>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-16"
+        >
+          <p className="text-gray-600 mb-6 text-lg">
+            Non hai trovato quello che cercavi? Abbiamo molti altri giochi disponibili!
+          </p>
+          <button
+            onClick={scrollToContact}
+            className="px-8 py-4 bg-white text-terracotta-600 rounded-full font-semibold hover:shadow-lg transition-all border-2 border-terracotta-200 hover:border-terracotta-400"
+          >
+            Richiedi Catalogo Completo
+          </button>
+        </motion.div>
       </div>
 
-      {/* GIFs OVERLAY - EXTREMELY HIGH Z-INDEX AND SEPARATE */}
-      <AnimatePresence>
-        {showAbilitaGifs && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 pointer-events-none"
-            style={{ zIndex: 999999 }}
-          >
-            {/* DESKTOP VIEW */}
-            <div className="hidden md:block w-full h-full relative">
-              <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
-                <img src="/images/games/abilita-hover-left.gif" className="w-[350px] h-[622px] object-contain rounded-2xl border-4 border-black shadow-[0_0_30px_#fb8500]" />
-              </div>
-              <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
-                <img src="/images/games/abilita-hover.gif" className="w-[350px] h-[622px] object-contain rounded-2xl border-4 border-black shadow-[0_0_30px_#fb8500]" />
-              </div>
-            </div>
-
-            {/* MOBILE VIEW */}
-            <div className="md:hidden flex items-center justify-center w-full h-full">
-              <div className="relative w-[85vw] flex items-center justify-center">
-                <img
-                  src={activeGifIndex === 0 ? "/images/games/abilita-hover-left.gif" : "/images/games/abilita-hover.gif"}
-                  className="w-full h-auto max-h-[70vh] object-contain rounded-2xl border-4 border-black shadow-[0_0_30px_#fb8500]"
-                />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* VIDEO MODAL */}
+      {/* Labs Video Modal */}
       {showLabsVideo && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[5000]" onClick={() => setShowLabsVideo(false)}>
-          <div className="relative rounded-2xl overflow-hidden border-4 border-black shadow-2xl" onClick={e => e.stopPropagation()}>
-            <iframe width="350" height="622" src="https://www.youtube.com/embed/xuZw-WtLa1M" frameBorder="0" allowFullScreen />
-            <button onClick={() => setShowLabsVideo(false)} className="absolute top-4 right-4 text-white bg-black/50 w-10 h-10 rounded-full border-2 border-white">✕</button>
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          onClick={() => setShowLabsVideo(false)}
+        >
+          <div
+            style={{
+              position: 'relative',
+              borderRadius: '16px',
+              border: '3px solid #000',
+              boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500',
+              overflow: 'hidden'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <iframe
+              width="350"
+              height="622"
+              src="https://www.youtube.com/embed/xuZw-WtLa1M"
+              title="Labs Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+            <button
+              onClick={() => setShowLabsVideo(false)}
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                color: '#fff',
+                border: '2px solid #fff',
+                borderRadius: '50%',
+                width: '36px',
+                height: '36px',
+                cursor: 'pointer',
+                fontSize: '18px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ✕
+            </button>
           </div>
         </div>
       )}
 
-      {/* SLIDESHOW MODAL */}
+      {/* Slideshow Modal */}
       {showSlideshow && (
-        <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-[5000]" onClick={() => setShowSlideshow(false)}>
-          <div className="relative max-w-4xl px-4" onClick={e => e.stopPropagation()}>
-            <img src={slideshowImages[currentSlide]} className="max-h-[80vh] w-auto rounded-xl border-4 border-black shadow-2xl" />
-            <button onClick={() => setCurrentSlide(p => (p === 0 ? slideshowImages.length - 1 : p - 1))} className="absolute left-0 top-1/2 -translate-y-1/2 text-white text-5xl">‹</button>
-            <button onClick={() => setCurrentSlide(p => (p === slideshowImages.length - 1 ? 0 : p + 1))} className="absolute right-0 top-1/2 -translate-y-1/2 text-white text-5xl">›</button>
-            <button onClick={() => setShowSlideshow(false)} className="absolute -top-12 right-0 text-white text-3xl">Chiudi ✕</button>
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          onClick={() => setShowSlideshow(false)}
+        >
+          <div
+            style={{
+              position: 'relative',
+              maxWidth: '90vw',
+              maxHeight: '80vh'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={slideshowImages[currentSlide]}
+              alt={`Slide ${currentSlide + 1}`}
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '80vh',
+                objectFit: 'contain',
+                borderRadius: '16px',
+                border: '3px solid #000',
+                boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+              }}
+            />
+            {/* Previous Button */}
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev === 0 ? slideshowImages.length - 1 : prev - 1))}
+              style={{
+                position: 'absolute',
+                left: '-60px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                color: '#fb8500',
+                border: '2px solid #fb8500',
+                borderRadius: '50%',
+                width: '50px',
+                height: '50px',
+                cursor: 'pointer',
+                fontSize: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ‹
+            </button>
+            {/* Next Button */}
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev === slideshowImages.length - 1 ? 0 : prev + 1))}
+              style={{
+                position: 'absolute',
+                right: '-60px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                color: '#fb8500',
+                border: '2px solid #fb8500',
+                borderRadius: '50%',
+                width: '50px',
+                height: '50px',
+                cursor: 'pointer',
+                fontSize: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ›
+            </button>
+            {/* Close Button */}
+            <button
+              onClick={() => setShowSlideshow(false)}
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                color: '#fff',
+                border: '2px solid #fff',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                cursor: 'pointer',
+                fontSize: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ✕
+            </button>
+            {/* Slide Counter */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '-40px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                color: '#fb8500',
+                fontSize: '1rem'
+              }}
+            >
+              {currentSlide + 1} / {slideshowImages.length}
+            </div>
           </div>
         </div>
       )}

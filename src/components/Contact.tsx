@@ -139,8 +139,7 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      size={15}
-                      className="w-auto px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="flex-1 min-w-0 px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="Mario Rossi"
                     />
                   </div>
@@ -155,9 +154,8 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      size={20}
-                      className="w-auto px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
-                      placeholder="mario@example.com"
+                      className="flex-1 min-w-0 px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      placeholder="mario.rossi@example.com"
                     />
                   </div>
                 </div>
@@ -172,9 +170,8 @@ export default function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      size={12}
-                      className="w-auto px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
-                      placeholder="+39..."
+                      className="flex-1 min-w-0 px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      placeholder="+39 333..."
                     />
                   </div>
 
@@ -187,7 +184,7 @@ export default function Contact() {
                       required
                       value={formData.eventType}
                       onChange={handleChange}
-                      className="w-fit px-2 py-1 text-[10px] sm:text-base rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white text-gray-700"
+                      className="flex-1 min-w-0 px-2 py-2 text-[10px] sm:text-base rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white text-gray-700"
                     >
                       <option value="">Scegli...</option>
                       {eventTypes.map((type) => (
@@ -207,7 +204,7 @@ export default function Contact() {
                       name="date"
                       value={formData.date}
                       onChange={handleChange}
-                      className="w-auto px-2 py-1 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="flex-1 min-w-0 px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -221,8 +218,7 @@ export default function Contact() {
                       required
                       value={formData.location}
                       onChange={handleChange}
-                      size={12}
-                      className="w-auto px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="flex-1 min-w-0 px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="Milano..."
                     />
                   </div>
@@ -239,8 +235,7 @@ export default function Contact() {
                       required
                       value={formData.participants}
                       onChange={handleChange}
-                      size={8}
-                      className="w-auto px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="flex-1 min-w-0 px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="50..."
                     />
                   </div>
@@ -254,9 +249,8 @@ export default function Contact() {
                       name="duration"
                       value={formData.duration}
                       onChange={handleChange}
-                      size={8}
-                      className="w-auto px-2 sm:px-4 py-1 sm:py-2 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
-                      placeholder="4h..."
+                      className="flex-1 min-w-0 px-2 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      placeholder="4 ore..."
                     />
                   </div>
                 </div>
