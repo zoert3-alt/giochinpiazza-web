@@ -126,9 +126,9 @@ export default function Contact() {
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-8 md:gap-[60px]">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-[60px]">
+            <div className="bg-white rounded-2xl p-4 sm:p-8 shadow-lg border border-gray-100">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:gap-[60px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Nome e Cognome *
@@ -160,7 +160,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Telefono
@@ -194,7 +194,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Data Prevista
@@ -224,7 +224,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Numero Partecipanti Stimato *
