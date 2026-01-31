@@ -129,8 +129,8 @@ export default function Contact() {
             <div className="bg-white rounded-2xl p-4 sm:p-8 shadow-lg border border-gray-100">
               <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:gap-[60px]">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Nome e Cognome *
                     </label>
                     <input
@@ -139,13 +139,13 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="Mario Rossi"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Email *
                     </label>
                     <input
@@ -154,15 +154,15 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="mario.rossi@example.com"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Telefono
                     </label>
                     <input
@@ -170,13 +170,13 @@ export default function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="+39 333 123 4567"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Tipo di Evento *
                     </label>
                     <select
@@ -184,7 +184,7 @@ export default function Contact() {
                       required
                       value={formData.eventType}
                       onChange={handleChange}
-                      className="w-fit max-w-full px-3 py-2 text-sm sm:text-base rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white text-gray-700"
+                      className="w-fit max-w-[280px] md:max-w-full md:w-full px-3 py-2 text-sm sm:text-base rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors bg-white text-gray-700"
                     >
                       <option value="">Tipo di evento</option>
                       {eventTypes.map((type) => (
@@ -195,8 +195,8 @@ export default function Contact() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Data Prevista
                     </label>
                     <input
@@ -204,12 +204,12 @@ export default function Contact() {
                       name="date"
                       value={formData.date}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Location / Città *
                     </label>
                     <input
@@ -218,15 +218,15 @@ export default function Contact() {
                       required
                       value={formData.location}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="Milano, Parco Sempione"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[60px]">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Numero Partecipanti Stimato *
                     </label>
                     <input
@@ -235,13 +235,13 @@ export default function Contact() {
                       required
                       value={formData.participants}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="Es: 50-100 persone"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <div className="flex flex-col items-center md:items-start">
+                    <label className="w-fit block text-sm font-semibold text-gray-700 mb-2">
                       Durata Prevista
                     </label>
                     <input
@@ -249,15 +249,15 @@ export default function Contact() {
                       name="duration"
                       value={formData.duration}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
+                      className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors"
                       placeholder="Es: 3 ore, intera giornata"
                     />
                   </div>
                 </div>
 
-                <div style={{ marginTop: '24px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
-                    <label className="text-sm font-semibold text-gray-700">
+                <div className="flex flex-col items-center md:items-start" style={{ marginTop: '24px' }}>
+                  <div className="flex justify-center md:justify-start mb-2">
+                    <label className="w-fit text-sm font-semibold text-gray-700">
                       Dettagli Aggiuntivi e Richieste Specifiche
                     </label>
                   </div>
@@ -266,8 +266,8 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors resize-none"
-                    placeholder="Raccontaci di più sul tuo evento: obiettivi, vincoli spaziali, giochi che ti interessano particolarmente, budget indicativo, o qualsiasi altra informazione utile..."
+                    className="w-full md:w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-terracotta-500 focus:outline-none transition-colors resize-none"
+                    placeholder="Raccontaci di più..."
                   />
                 </div>
 
