@@ -127,8 +127,8 @@ export default function Contact() {
             className="lg:col-span-2"
           >
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '60px' }}>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-8 sm:gap-14">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-14">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Nome e Cognome *

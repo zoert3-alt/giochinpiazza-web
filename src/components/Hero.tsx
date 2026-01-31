@@ -205,21 +205,11 @@ export default function Hero() {
             </button>
           </motion.div>
 
-          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '2rem',
-              backgroundColor: 'rgba(0, 0, 0, 0.75)',
-              borderRadius: '16px',
-              padding: '2rem',
-              border: '2px solid white',
-              boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-            }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 bg-black/75 backdrop-blur-sm rounded-3xl p-8 sm:p-16 border-2 border-white shadow-[0_0_20px_#fff,0_0_30px_#fb8500,0_0_40px_#fb8500] mx-2 sm:mx-0"
           >
             <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
             <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
