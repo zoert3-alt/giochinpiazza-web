@@ -153,7 +153,7 @@ export default function GamesSection() {
             Il Nostro <span className="text-gradient-warm">Catalogo</span> di Giochi
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed">
-            Oltre 25 giochi tradizionali italiani accuratamente selezionati e realizzati in legno naturale. Ogni gioco racconta una story e crea un'esperienza unica di connessione e divertimento.
+            Oltre 25 giochi tradizionali italiani accuratamente selezionati e realizzati in legno naturale. Ogni gioco racconta una storia e crea un'esperienza unica di connessione e divertimento.
           </p>
         </motion.div>
 
