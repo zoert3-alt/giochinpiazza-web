@@ -132,25 +132,41 @@ export default function GamesSection() {
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
 
   const [startTime, setStartTime] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     let t1: number, t2: number
     if (showAbilitaGifs) {
       setStartTime(Date.now())
-      setActiveGifIndex(0)
-      t1 = window.setTimeout(() => {
-        setActiveGifIndex(1)
-        t2 = window.setTimeout(() => {
+      if (isMobile) {
+        setActiveGifIndex(0)
+        t1 = window.setTimeout(() => {
+          setActiveGifIndex(1)
+          t2 = window.setTimeout(() => {
+            setShowAbilitaGifs(false)
+            setActiveGifIndex(0)
+          }, 3450)
+        }, 2650)
+      } else {
+        // Desktop: show both simultaneously
+        setActiveGifIndex(-1) // Signal to show both
+        t1 = window.setTimeout(() => {
           setShowAbilitaGifs(false)
-          setActiveGifIndex(0)
         }, 3450)
-      }, 2650)
+      }
     }
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
     }
-  }, [showAbilitaGifs])
+  }, [showAbilitaGifs, isMobile])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
@@ -218,75 +234,6 @@ export default function GamesSection() {
               {category}
             </button>
           ))}
-          {showAbilitaGifs && (
-            <div key={startTime} className="fixed inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 9999 }}>
-              {/* Desktop Gifs (Separate to avoid "doubling") */}
-              <div className="hidden md:block w-full h-full relative">
-                <div
-                  className={`absolute top-1/2 left-[5%] -translate-y-1/2 transition-opacity duration-300 ${activeGifIndex === 0 ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <img
-                    src="/images/games/abilita-hover-left.gif"
-                    alt="Abilità 1"
-                    style={{
-                      width: '350px',
-                      height: '622px',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
-                  />
-                </div>
-                <div
-                  className={`absolute top-1/2 right-[5%] -translate-y-1/2 transition-opacity duration-300 ${activeGifIndex === 1 ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <img
-                    src="/images/games/abilita-hover.gif"
-                    alt="Abilità 2"
-                    style={{
-                      width: '350px',
-                      height: '622px',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Mobile Gifs (Centered) */}
-              <div className="md:hidden w-full flex justify-center items-center">
-                <div className="relative w-[85vw] flex justify-center items-center">
-                  <img
-                    src="/images/games/abilita-hover-left.gif"
-                    alt="Abilità 1 Mobile"
-                    className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ${activeGifIndex === 0 ? 'opacity-100' : 'opacity-0'}`}
-                    style={{
-                      maxHeight: '70vh',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
-                  />
-                  <img
-                    src="/images/games/abilita-hover.gif"
-                    alt="Abilità 2 Mobile"
-                    className={`w-full h-auto transition-opacity duration-300 ${activeGifIndex === 1 ? 'opacity-100' : 'opacity-0'}`}
-                    style={{
-                      maxHeight: '70vh',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
           {hoveredCategory === 'Labs' && (
             <div
               style={{
@@ -344,6 +291,75 @@ export default function GamesSection() {
             Richiedi Catalogo Completo
           </button>
         </motion.div>
+
+        {/* Global Skill GIFs Overlay - Moved out of Filter to fix layout doubling/stacking */}
+        {showAbilitaGifs && (
+          <div key={startTime} className="fixed inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 9999 }}>
+            {!isMobile ? (
+              /* Desktop: Simultaneous display at opposite sides */
+              <div className="w-full h-full relative">
+                <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
+                  <img
+                    src="/images/games/abilita-hover-left.gif"
+                    alt="Abilità Sinistra"
+                    style={{
+                      width: '350px',
+                      height: '622px',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                </div>
+                <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
+                  <img
+                    src="/images/games/abilita-hover.gif"
+                    alt="Abilità Destra"
+                    style={{
+                      width: '350px',
+                      height: '622px',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              /* Mobile: Rotational centered display */
+              <div className="w-full h-full flex justify-center items-center">
+                <div className="relative w-[85vw] flex justify-center items-center">
+                  <img
+                    src="/images/games/abilita-hover-left.gif"
+                    alt="Abilità 1 Mobile"
+                    className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ${activeGifIndex === 0 ? 'opacity-100' : 'opacity-0'}`}
+                    style={{
+                      maxHeight: '70vh',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                  <img
+                    src="/images/games/abilita-hover.gif"
+                    alt="Abilità 2 Mobile"
+                    className={`w-full h-auto transition-opacity duration-300 ${activeGifIndex === 1 ? 'opacity-100' : 'opacity-0'}`}
+                    style={{
+                      maxHeight: '70vh',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Labs Video Modal */}
