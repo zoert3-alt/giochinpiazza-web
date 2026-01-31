@@ -18,8 +18,7 @@
 
 @layer base {
   * {
-    font-family: "SuperNaive", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
-    text-align: center;
+    font-family: "SuperNaive", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   body {
@@ -56,94 +55,33 @@
   }
 
   h1 {
-    font-size: clamp(2.5rem, 10vw, 4rem) !important;
-    color: #fb8500 !important;
-    text-shadow:
-      -2px -2px 0 #000,
-      2px -2px 0 #000,
-      -2px 2px 0 #000,
-      2px 2px 0 #000,
-      0 0 12px rgba(0, 0, 0, 0.9),
-      0 0 20px rgba(0, 0, 0, 0.7);
+    font-size: clamp(2.5rem, 10vw, 4rem);
+    color: #fb8500;
   }
 
   h2 {
-    font-size: clamp(2rem, 8vw, 3rem) !important;
-    color: #fb8500 !important;
-    text-shadow:
-      -2px -2px 0 #000,
-      2px -2px 0 #000,
-      -2px 2px 0 #000,
-      2px 2px 0 #000,
-      0 0 10px rgba(0, 0, 0, 0.8),
-      0 0 16px rgba(0, 0, 0, 0.6);
+    font-size: clamp(2rem, 8vw, 3rem);
+    color: #fb8500;
   }
 
-  h3 {
-    font-size: clamp(1.5rem, 6vw, 2rem) !important;
-    color: #ffffff !important;
-    text-shadow:
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000,
-      0 0 8px rgba(0, 0, 0, 0.8),
-      0 0 12px rgba(0, 0, 0, 0.6);
-  }
-
-  h4 {
-    font-size: clamp(1.2rem, 5vw, 1.5rem) !important;
-    color: #fb8500 !important;
-    text-shadow:
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000,
-      0 0 8px rgba(0, 0, 0, 0.8);
-  }
-
-  span,
-  li,
-  label {
-    color: #e5e5e5 !important;
-    text-shadow:
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000,
-      0 0 4px rgba(0, 0, 0, 0.8);
-    display: inline;
-    line-height: 1.4;
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    display: list-item;
-    margin: 8px auto;
+  p {
+    font-size: 1.125rem;
+    color: #fb8500;
   }
 
   button,
   a {
-    color: #fb8500 !important;
-    background-color: rgba(0, 0, 0, 0.75) !important;
-    padding: 6px 12px !important;
-    border-radius: 16px !important;
-    border: 2px solid white !important;
-    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500 !important;
-    text-decoration: none !important;
-    cursor: pointer !important;
+    transition: all 0.3s ease;
   }
 
   input,
   textarea,
   select {
-    color: #ffffff !important;
-    background-color: rgba(0, 0, 0, 0.75) !important;
-    padding: 10px 14px !important;
-    border-radius: 16px !important;
-    border: 2px solid white !important;
-    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500 !important;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 10px 14px;
+    border-radius: 16px;
+    border: 2px solid white;
   }
 
   input::placeholder,

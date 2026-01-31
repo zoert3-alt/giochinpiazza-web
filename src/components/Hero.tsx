@@ -50,17 +50,17 @@ function StatCounter({ end, suffix = '', label }: StatCounterProps) {
   }, [isVisible, end])
 
   return (
-    <div ref={ref} className="flex flex-col items-center">
+    <div ref={ref} className="flex flex-col items-center justify-center p-4">
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         viewport={{ once: true }}
-        className="text-3xl sm:text-4xl font-extrabold mb-1"
+        className="text-4xl sm:text-5xl font-black mb-2 tracking-tighter"
         style={{ color: '#fb8500' }}
       >
         {count.toLocaleString()}{suffix}
       </motion.div>
-      <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white opacity-90 leading-tight">
+      <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-white/80 leading-tight text-center">
         {label}
       </div>
     </div>
@@ -97,17 +97,17 @@ export default function Hero() {
           marginRight: 'auto',
           textAlign: 'center'
         }}>
-          {/* Logo */}
+          {/* Logo Container */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="flex justify-center mb-10 sm:mb-16 -mt-8 sm:-mt-12"
+            className="flex justify-center items-center mb-12 sm:mb-16 -mt-10 sm:-mt-16"
           >
             <img
               src="/images/LOGO.png"
               alt="Gioco in Piazza Logo"
-              className="h-20 sm:h-28 w-auto object-contain"
+              className="h-24 sm:h-36 w-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -170,13 +170,13 @@ export default function Hero() {
             </button>
           </motion.div>
 
-          {/* Stats */}
-          <div className="px-2 sm:px-0">
+          {/* Stats Box */}
+          <div className="px-4 sm:px-0 mt-20">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-4 bg-black/80 backdrop-blur-md rounded-[2.5rem] p-10 sm:p-14 border-2 border-white shadow-[0_0_40px_rgba(251,133,0,0.5)]"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 bg-black/90 backdrop-blur-xl rounded-[2.5rem] p-8 sm:p-14 border-2 border-white/20 shadow-2xl"
             >
               <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
               <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />

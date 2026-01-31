@@ -37,9 +37,9 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
         {/* Secondary Image */}
         {secondaryImage ? (
           <div
-            className="flex items-center justify-center bg-transparent relative overflow-hidden transition-all duration-300 mb-6"
+            className="relative bg-gray-50 flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out p-6 mb-6"
             style={{
-              height: isSecondaryHovered ? 'clamp(300px, 70vh, 520px)' : '240px',
+              height: isSecondaryHovered ? '450px' : '260px',
             }}
           >
             <img
@@ -47,14 +47,14 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
               alt={`${type} - dettaglio`}
               onMouseEnter={() => setIsSecondaryHovered(true)}
               onMouseLeave={() => setIsSecondaryHovered(false)}
-              className="w-auto h-full max-w-full border-2 border-black rounded-lg cursor-pointer transition-all duration-300 object-contain shadow-md"
+              className="max-w-full max-h-full w-auto h-auto object-contain border-2 border-black rounded-lg cursor-pointer transition-transform duration-500 shadow-md"
               style={{
-                height: isSecondaryHovered ? '95%' : '85%',
+                transform: isSecondaryHovered ? 'scale(1.05)' : 'scale(1)',
               }}
             />
           </div>
         ) : (
-          <div className="h-[240px] bg-gray-100 rounded-lg flex items-center justify-center mb-6">
+          <div className="h-[260px] bg-gray-100 rounded-lg flex items-center justify-center mb-6">
           </div>
         )}
 
