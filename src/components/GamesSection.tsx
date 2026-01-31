@@ -134,18 +134,21 @@ export default function GamesSection() {
   const [startTime, setStartTime] = useState(0)
 
   useEffect(() => {
+    let t1: number, t2: number
     if (showAbilitaGifs) {
       setStartTime(Date.now())
       setActiveGifIndex(0)
-      const timer1 = setTimeout(() => {
+      t1 = window.setTimeout(() => {
         setActiveGifIndex(1)
-        const timer2 = setTimeout(() => {
+        t2 = window.setTimeout(() => {
           setShowAbilitaGifs(false)
           setActiveGifIndex(0)
         }, 3450)
-        return () => clearTimeout(timer2)
       }, 2650)
-      return () => clearTimeout(timer1)
+    }
+    return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
     }
   }, [showAbilitaGifs])
 
@@ -216,54 +219,51 @@ export default function GamesSection() {
             </button>
           ))}
           {showAbilitaGifs && (
-            <div key={startTime} className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
-              {/* Desktop View */}
+            <div key={startTime} className="fixed inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 9999 }}>
+              {/* Desktop Gifs (Separate to avoid "doubling") */}
               <div className="hidden md:block w-full h-full relative">
-                {activeGifIndex === 0 && (
-                  <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
-                    <img
-                      src="/images/games/abilita-hover-left.gif"
-                      alt="Abilità 1"
-                      style={{
-                        width: '350px',
-                        height: '622px',
-                        objectFit: 'contain',
-                        backgroundColor: 'transparent',
-                        borderRadius: '16px',
-                        border: '3px solid #000',
-                        boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                      }}
-                    />
-                  </div>
-                )}
-                {activeGifIndex === 1 && (
-                  <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
-                    <img
-                      src="/images/games/abilita-hover.gif"
-                      alt="Abilità 2"
-                      style={{
-                        width: '350px',
-                        height: '622px',
-                        objectFit: 'contain',
-                        backgroundColor: 'transparent',
-                        borderRadius: '16px',
-                        border: '3px solid #000',
-                        boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                      }}
-                    />
-                  </div>
-                )}
+                <div
+                  className={`absolute top-1/2 left-[5%] -translate-y-1/2 transition-opacity duration-300 ${activeGifIndex === 0 ? 'opacity-100' : 'opacity-0'}`}
+                >
+                  <img
+                    src="/images/games/abilita-hover-left.gif"
+                    alt="Abilità 1"
+                    style={{
+                      width: '350px',
+                      height: '622px',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                </div>
+                <div
+                  className={`absolute top-1/2 right-[5%] -translate-y-1/2 transition-opacity duration-300 ${activeGifIndex === 1 ? 'opacity-100' : 'opacity-0'}`}
+                >
+                  <img
+                    src="/images/games/abilita-hover.gif"
+                    alt="Abilità 2"
+                    style={{
+                      width: '350px',
+                      height: '622px',
+                      objectFit: 'contain',
+                      borderRadius: '16px',
+                      border: '3px solid #000',
+                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+                    }}
+                  />
+                </div>
               </div>
 
-              {/* Mobile View */}
-              <div className="md:hidden flex items-center justify-center w-full h-full">
-                {activeGifIndex === 0 && (
+              {/* Mobile Gifs (Centered) */}
+              <div className="md:hidden w-full flex justify-center items-center">
+                <div className="relative w-[85vw] flex justify-center items-center">
                   <img
                     src="/images/games/abilita-hover-left.gif"
                     alt="Abilità 1 Mobile"
+                    className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ${activeGifIndex === 0 ? 'opacity-100' : 'opacity-0'}`}
                     style={{
-                      width: '85vw',
-                      height: 'auto',
                       maxHeight: '70vh',
                       objectFit: 'contain',
                       borderRadius: '16px',
@@ -271,14 +271,11 @@ export default function GamesSection() {
                       boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
                     }}
                   />
-                )}
-                {activeGifIndex === 1 && (
                   <img
                     src="/images/games/abilita-hover.gif"
                     alt="Abilità 2 Mobile"
+                    className={`w-full h-auto transition-opacity duration-300 ${activeGifIndex === 1 ? 'opacity-100' : 'opacity-0'}`}
                     style={{
-                      width: '85vw',
-                      height: 'auto',
                       maxHeight: '70vh',
                       objectFit: 'contain',
                       borderRadius: '16px',
@@ -286,7 +283,7 @@ export default function GamesSection() {
                       boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
                     }}
                   />
-                )}
+                </div>
               </div>
             </div>
           )}
