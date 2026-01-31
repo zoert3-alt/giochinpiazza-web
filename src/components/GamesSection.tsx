@@ -138,9 +138,10 @@ export default function GamesSection() {
         setActiveGifIndex(1)
         const timer2 = setTimeout(() => {
           setShowAbilitaGifs(false)
-        }, 2500)
+          setActiveGifIndex(0)
+        }, 4000)
         return () => clearTimeout(timer2)
-      }, 2500)
+      }, 4000)
       return () => clearTimeout(timer1)
     }
   }, [showAbilitaGifs])
@@ -219,15 +220,15 @@ export default function GamesSection() {
                   {activeGifIndex === 0 ? (
                     <motion.div
                       key="left"
-                      initial={{ opacity: 0, x: -50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -50 }}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
                       style={{
                         position: 'fixed',
                         top: '50%',
                         left: '5%',
                         transform: 'translateY(-50%)',
-                        zIndex: 100,
+                        zIndex: 200,
                         pointerEvents: 'none'
                       }}
                     >
@@ -235,7 +236,7 @@ export default function GamesSection() {
                         src="/images/games/abilita-hover-left.gif"
                         alt="Abilità"
                         style={{
-                          maxWidth: '280px',
+                          width: '350px',
                           height: 'auto',
                           borderRadius: '16px',
                           border: '3px solid #000',
@@ -246,15 +247,15 @@ export default function GamesSection() {
                   ) : (
                     <motion.div
                       key="right"
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 50 }}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
                       style={{
                         position: 'fixed',
                         top: '50%',
                         right: '5%',
                         transform: 'translateY(-50%)',
-                        zIndex: 100,
+                        zIndex: 200,
                         pointerEvents: 'none'
                       }}
                     >
@@ -262,7 +263,7 @@ export default function GamesSection() {
                         src="/images/games/abilita-hover.gif"
                         alt="Abilità"
                         style={{
-                          maxWidth: '280px',
+                          width: '350px',
                           height: 'auto',
                           borderRadius: '16px',
                           border: '3px solid #000',
@@ -274,7 +275,7 @@ export default function GamesSection() {
                 </AnimatePresence>
               </div>
 
-              {/* Layout Mobile: Alterna al centro */}
+              {/* Layout Mobile: Alterna al centro dello schermo */}
               <div
                 className="md:hidden"
                 style={{
@@ -282,20 +283,20 @@ export default function GamesSection() {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  zIndex: 100,
+                  zIndex: 200,
                   pointerEvents: 'none',
-                  width: '90vw'
+                  width: '85vw'
                 }}
               >
                 <AnimatePresence mode="wait">
                   <motion.img
-                    key={activeGifIndex}
+                    key={activeGifIndex === 0 ? "mob-left" : "mob-right"}
                     src={activeGifIndex === 0 ? "/images/games/abilita-hover-left.gif" : "/images/games/abilita-hover.gif"}
                     alt="Abilità"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.4 }}
                     style={{
                       width: '100%',
                       height: 'auto',
