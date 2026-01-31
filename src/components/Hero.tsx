@@ -159,47 +159,17 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              gap: '1rem',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: '5rem'
-            }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 sm:mb-20"
           >
             <button
               onClick={() => scrollToSection('#contatti')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '1rem 2rem',
-                backgroundColor: 'white',
-                color: '#1f2937',
-                fontWeight: 600,
-                borderRadius: '9999px',
-                border: '2px solid #e5e7eb',
-                cursor: 'pointer'
-              }}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 font-bold rounded-full border-2 border-gray-200 hover:shadow-xl transition-all"
             >
               Richiedi Preventivo Gratuito
             </button>
             <button
               onClick={() => scrollToSection('#portfolio')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '1rem 2rem',
-                backgroundColor: 'white',
-                color: '#1f2937',
-                fontWeight: 600,
-                borderRadius: '9999px',
-                border: '2px solid #e5e7eb',
-                cursor: 'pointer'
-              }}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 font-bold rounded-full border-2 border-gray-200 hover:shadow-xl transition-all"
             >
               Guarda i Nostri Eventi
             </button>
@@ -210,16 +180,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '2rem',
-              backgroundColor: 'rgba(0, 0, 0, 0.75)',
-              borderRadius: '16px',
-              padding: '2rem',
-              border: '2px solid white',
-              boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-            }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 bg-black/75 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border-2 border-white shadow-[0_0_20px_rgba(251,133,0,0.3)]"
           >
             <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
             <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />

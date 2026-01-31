@@ -183,15 +183,15 @@ export default function GamesSection() {
               onMouseEnter={() => setHoveredCategory(category)}
               onMouseLeave={() => setHoveredCategory(null)}
               className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
-                  ? 'bg-gradient-warm text-white shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
+                ? 'bg-gradient-warm text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
                 }`}
             >
               {category}
             </button>
           ))}
           {hoveredCategory === 'Abilità' && (
-            <>
+            <div className="hidden lg:block">
               <div
                 style={{
                   position: 'fixed',
@@ -236,10 +236,11 @@ export default function GamesSection() {
                   }}
                 />
               </div>
-            </>
+            </div>
           )}
           {hoveredCategory === 'Labs' && (
             <div
+              className="hidden lg:block"
               style={{
                 position: 'fixed',
                 top: '50%',
@@ -324,15 +325,16 @@ export default function GamesSection() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <iframe
-              width="350"
-              height="622"
-              src="https://www.youtube.com/embed/xuZw-WtLa1M"
-              title="Labs Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            <div className="relative w-[90vw] max-w-[350px] aspect-[9/16]">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/xuZw-WtLa1M"
+                title="Labs Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
             <button
               onClick={() => setShowLabsVideo(false)}
               style={{
@@ -400,20 +402,21 @@ export default function GamesSection() {
               onClick={() => setCurrentSlide((prev) => (prev === 0 ? slideshowImages.length - 1 : prev - 1))}
               style={{
                 position: 'absolute',
-                left: '-60px',
+                left: '10px',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'rgba(0, 0, 0, 0.75)',
                 color: '#fb8500',
                 border: '2px solid #fb8500',
                 borderRadius: '50%',
-                width: '50px',
-                height: '50px',
+                width: '40px',
+                height: '40px',
                 cursor: 'pointer',
-                fontSize: '24px',
+                fontSize: '20px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                zIndex: 10
               }}
             >
               ‹
@@ -423,20 +426,21 @@ export default function GamesSection() {
               onClick={() => setCurrentSlide((prev) => (prev === slideshowImages.length - 1 ? 0 : prev + 1))}
               style={{
                 position: 'absolute',
-                right: '-60px',
+                right: '10px',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'rgba(0, 0, 0, 0.75)',
                 color: '#fb8500',
                 border: '2px solid #fb8500',
                 borderRadius: '50%',
-                width: '50px',
-                height: '50px',
+                width: '40px',
+                height: '40px',
                 cursor: 'pointer',
-                fontSize: '24px',
+                fontSize: '20px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                zIndex: 10
               }}
             >
               ›

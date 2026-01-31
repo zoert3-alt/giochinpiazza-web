@@ -22,59 +22,50 @@ function PortfolioItem({ type, secondaryImage, testimonial, delay }: PortfolioIt
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
-      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform md:hover:-translate-y-1 border border-gray-100"
     >
       {/* Title Image */}
       <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
         <img
           src="/images/portfolio/portfolio-title.png"
           alt=""
-          style={{ height: '80px', width: 'auto', maxWidth: '100%', objectFit: 'contain' }}
+          className="h-20 w-auto max-w-full object-contain"
         />
       </div>
 
       <div className="p-6">
         {/* Secondary Image */}
         {secondaryImage ? (
-          <div style={{
-            height: isSecondaryHovered ? '520px' : '260px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'transparent',
-            position: 'relative',
-            overflow: 'hidden',
-            transition: 'height 0.3s ease',
-            marginBottom: '20px'
-          }}>
+          <div
+            className="flex items-center justify-center bg-transparent relative overflow-hidden transition-all duration-300 mb-5"
+            style={{
+              height: isSecondaryHovered ? 'clamp(300px, 70vh, 520px)' : '210px',
+            }}
+          >
             <img
               src={secondaryImage}
               alt={`${type} - dettaglio`}
               onMouseEnter={() => setIsSecondaryHovered(true)}
               onMouseLeave={() => setIsSecondaryHovered(false)}
+              className="w-auto border-3 border-black rounded-lg cursor-pointer transition-all duration-300"
               style={{
-                height: isSecondaryHovered ? '470px' : '210px',
-                width: 'auto',
-                maxWidth: isSecondaryHovered ? '100%' : '90%',
+                height: isSecondaryHovered ? '95%' : '100%',
+                maxWidth: '100%',
                 objectFit: 'contain',
-                transition: 'height 0.3s ease, max-width 0.3s ease',
-                cursor: 'pointer',
-                border: '3px solid #000',
-                borderRadius: '8px'
               }}
             />
           </div>
         ) : (
-          <div style={{ height: '260px', backgroundColor: '#9ca3af', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+          <div className="h-[210px] bg-gray-400 rounded-lg flex items-center justify-center mb-5">
           </div>
         )}
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)', padding: '10px 12px', borderRadius: '16px', maxWidth: '85%', border: '2px solid white', boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500' }}>
-            <p style={{ color: '#fb8500', fontStyle: 'italic', fontSize: '0.8rem', lineHeight: '1.5', marginBottom: '4px' }}>
+        <div className="flex justify-center">
+          <div className="bg-black/75 p-4 rounded-2xl max-w-[95%] border-2 border-white shadow-[0_0_15px_rgba(251,133,0,0.4)]">
+            <p className="text-[#fb8500] italic text-[0.85rem] leading-relaxed mb-1">
               "{testimonial.quote}"
             </p>
-            <p style={{ color: '#fb8500', fontSize: '0.7rem', fontWeight: 'bold' }}>
+            <p className="text-[#fb8500] text-[0.75rem] font-bold">
               — {testimonial.author}, {testimonial.role}
             </p>
           </div>
