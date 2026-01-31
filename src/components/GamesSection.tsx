@@ -132,32 +132,25 @@ export default function GamesSection() {
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
 
   const [startTime, setStartTime] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  useEffect(() => {
-    let t1: number, t2: number
+    let t1: any, t2: any
     if (showAbilitaGifs) {
       setStartTime(Date.now())
-      if (isMobile) {
+      if (window.innerWidth < 768) {
+        // Mobile sequence
         setActiveGifIndex(0)
-        t1 = window.setTimeout(() => {
+        t1 = setTimeout(() => {
           setActiveGifIndex(1)
-          t2 = window.setTimeout(() => {
+          t2 = setTimeout(() => {
             setShowAbilitaGifs(false)
             setActiveGifIndex(0)
           }, 3450)
         }, 2650)
       } else {
-        // Desktop: show both simultaneously
-        setActiveGifIndex(-1) // Signal to show both
-        t1 = window.setTimeout(() => {
+        // Desktop simultaneous
+        setActiveGifIndex(-1)
+        t1 = setTimeout(() => {
           setShowAbilitaGifs(false)
         }, 3450)
       }
@@ -166,7 +159,7 @@ export default function GamesSection() {
       clearTimeout(t1)
       clearTimeout(t2)
     }
-  }, [showAbilitaGifs, isMobile])
+  }, [showAbilitaGifs])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
@@ -292,72 +285,46 @@ export default function GamesSection() {
           </button>
         </motion.div>
 
-        {/* Global Skill GIFs Overlay - Moved out of Filter to fix layout doubling/stacking */}
+        {/* Global Skill GIFs Overlay - Total clean up */}
         {showAbilitaGifs && (
-          <div key={startTime} className="fixed inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 9999 }}>
-            {!isMobile ? (
-              /* Desktop: Simultaneous display at opposite sides */
-              <div className="w-full h-full relative">
-                <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
+          <div key={startTime} className="fixed inset-0 pointer-events-none" style={{ zIndex: 10000 }}>
+            {/* DESKTOP: Both at the same time */}
+            <div className="hidden md:block w-full h-full relative">
+              <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
+                <img
+                  src="/images/games/abilita-hover-left.gif"
+                  alt=""
+                  style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
+                />
+              </div>
+              <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
+                <img
+                  src="/images/games/abilita-hover.gif"
+                  alt=""
+                  style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
+                />
+              </div>
+            </div>
+
+            {/* MOBILE: One after the other, centered */}
+            <div className="md:hidden w-full h-full flex items-center justify-center">
+              <div className="relative w-[85vw] flex items-center justify-center">
+                {activeGifIndex === 0 && (
                   <img
                     src="/images/games/abilita-hover-left.gif"
-                    alt="Abilità Sinistra"
-                    style={{
-                      width: '350px',
-                      height: '622px',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
+                    alt=""
+                    style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
                   />
-                </div>
-                <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
+                )}
+                {activeGifIndex === 1 && (
                   <img
                     src="/images/games/abilita-hover.gif"
-                    alt="Abilità Destra"
-                    style={{
-                      width: '350px',
-                      height: '622px',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
+                    alt=""
+                    style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
                   />
-                </div>
+                )}
               </div>
-            ) : (
-              /* Mobile: Rotational centered display */
-              <div className="w-full h-full flex justify-center items-center">
-                <div className="relative w-[85vw] flex justify-center items-center">
-                  <img
-                    src="/images/games/abilita-hover-left.gif"
-                    alt="Abilità 1 Mobile"
-                    className={`absolute inset-0 w-full h-auto transition-opacity duration-300 ${activeGifIndex === 0 ? 'opacity-100' : 'opacity-0'}`}
-                    style={{
-                      maxHeight: '70vh',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
-                  />
-                  <img
-                    src="/images/games/abilita-hover.gif"
-                    alt="Abilità 2 Mobile"
-                    className={`w-full h-auto transition-opacity duration-300 ${activeGifIndex === 1 ? 'opacity-100' : 'opacity-0'}`}
-                    style={{
-                      maxHeight: '70vh',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      border: '3px solid #000',
-                      boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-                    }}
-                  />
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         )}
       </div>
