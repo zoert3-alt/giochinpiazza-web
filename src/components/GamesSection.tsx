@@ -7,7 +7,7 @@ interface GameCardProps {
   description: string
   players: string
   age: string
-  image?: string // Path to image in public folder, e.g. "/images/games/rana.png"
+  image?: string
   delay: number
 }
 
@@ -23,7 +23,6 @@ function GameCard({ name, description, image, delay }: GameCardProps) {
       transition={{ duration: 0.4, delay }}
       className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
     >
-      {/* Image or Icon Header */}
       {image ? (
         <div style={{
           height: isImageHovered ? '600px' : '300px',
@@ -130,26 +129,39 @@ export default function GamesSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [activeGifIndex, setActiveGifIndex] = useState(0)
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
-  const [startTime, setStartTime] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     let t1: any, t2: any
     if (showAbilitaGifs) {
-      setStartTime(Date.now())
       setActiveGifIndex(0)
-      t1 = setTimeout(() => {
-        setActiveGifIndex(1)
-        t2 = setTimeout(() => {
+      if (isMobile) {
+        // Mobile: Rotate sequence
+        t1 = setTimeout(() => {
+          setActiveGifIndex(1)
+          t2 = setTimeout(() => {
+            setShowAbilitaGifs(false)
+          }, 3450)
+        }, 2650)
+      } else {
+        // Desktop: Just wait for the total duration then close
+        t1 = setTimeout(() => {
           setShowAbilitaGifs(false)
-          setActiveGifIndex(0)
         }, 3450)
-      }, 2650)
+      }
     }
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
     }
-  }, [showAbilitaGifs])
+  }, [showAbilitaGifs, isMobile])
 
   const filteredGames = selectedCategory === 'Esempi'
     ? games
@@ -180,16 +192,12 @@ export default function GamesSection() {
         </motion.div>
 
         {/* Category Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
-        >
+        <div className="flex flex-wrap justify-center gap-3 mb-12 relative z-10">
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 if (category === 'Labs') {
                   setShowLabsVideo(true)
                 } else if (category === 'Esempi') {
@@ -200,7 +208,7 @@ export default function GamesSection() {
                   scrollToContact()
                 } else if (category === 'Abilità') {
                   setSelectedCategory('Abilità')
-                  setShowAbilitaGifs(!showAbilitaGifs)
+                  setShowAbilitaGifs(true) // Force start
                 } else {
                   setSelectedCategory(category)
                 }
@@ -209,7 +217,7 @@ export default function GamesSection() {
                 if (category !== 'Abilità') setHoveredCategory(category)
               }}
               onMouseLeave={() => setHoveredCategory(null)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
+              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 relative z-20 ${selectedCategory === category
                 ? 'bg-gradient-warm text-white shadow-lg scale-105'
                 : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
                 }`}
@@ -224,7 +232,7 @@ export default function GamesSection() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                zIndex: 100,
+                zIndex: 1000,
                 pointerEvents: 'none',
                 padding: '20px',
                 backgroundColor: 'rgba(0, 0, 0, 0.85)',
@@ -243,10 +251,10 @@ export default function GamesSection() {
               </p>
             </div>
           )}
-        </motion.div>
+        </div>
 
         {/* Games Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-0">
           <AnimatePresence>
             {filteredGames.map((game, idx) => (
               <GameCard
@@ -258,12 +266,7 @@ export default function GamesSection() {
           </AnimatePresence>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
+        <div className="text-center mt-16">
           <p className="text-gray-600 mb-6 text-lg">
             Non hai trovato quello che cercavi? Abbiamo molti altri giochi disponibili!
           </p>
@@ -273,86 +276,71 @@ export default function GamesSection() {
           >
             Richiedi Catalogo Completo
           </button>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Global Skill GIFs Overlay - Total clean up and high z-index */}
+      {/* GIFs OVERLAY - EXTREMELY HIGH Z-INDEX AND SEPARATE */}
       <AnimatePresence>
         {showAbilitaGifs && (
           <motion.div
-            key={startTime}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 pointer-events-none"
-            style={{ zIndex: 100000, pointerEvents: 'none' }}
+            style={{ zIndex: 999999, pointerEvents: 'none' }}
           >
-            {/* DESKTOP: Both at the same time */}
-            <div className="hidden md:block w-full h-full relative">
-              <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
-                <img
-                  src="/images/games/abilita-hover-left.gif"
-                  alt=""
-                  style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
-                />
-              </div>
-              <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
-                <img
-                  src="/images/games/abilita-hover.gif"
-                  alt=""
-                  style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
-                />
-              </div>
-            </div>
-
-            {/* MOBILE: One after the other, centered */}
-            <div className="md:hidden w-full h-full flex items-center justify-center">
-              <div className="relative w-[85vw] flex items-center justify-center">
-                {activeGifIndex === 0 && (
+            {/* DESKTOP: Both side by side */}
+            {!isMobile && (
+              <div className="w-full h-full relative">
+                <div className="absolute top-1/2 left-[5%] -translate-y-1/2">
                   <img
                     src="/images/games/abilita-hover-left.gif"
                     alt=""
-                    style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
+                    style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
                   />
-                )}
-                {activeGifIndex === 1 && (
+                </div>
+                <div className="absolute top-1/2 right-[5%] -translate-y-1/2">
                   <img
                     src="/images/games/abilita-hover.gif"
                     alt=""
-                    style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 10px #fff, 0 0 30px #fb8500' }}
+                    style={{ width: '350px', height: '622px', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
                   />
-                )}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* MOBILE: Sequential centered */}
+            {isMobile && (
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="relative w-[85vw] flex items-center justify-center">
+                  {activeGifIndex === 0 ? (
+                    <img
+                      src="/images/games/abilita-hover-left.gif"
+                      alt=""
+                      style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
+                    />
+                  ) : (
+                    <img
+                      src="/images/games/abilita-hover.gif"
+                      alt=""
+                      style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: '16px', border: '3px solid #000', boxShadow: '0 0 20px #fb8500' }}
+                    />
+                  )}
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Labs Video Modal */}
+      {/* MODALS */}
       {showLabsVideo && (
         <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.85)',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          className="fixed inset-0 bg-black/85 flex items-center justify-center z-[2000]"
           onClick={() => setShowLabsVideo(false)}
         >
           <div
-            style={{
-              position: 'relative',
-              borderRadius: '16px',
-              border: '3px solid #000',
-              boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500',
-              overflow: 'hidden'
-            }}
+            className="relative rounded-2xl border-3 border-black shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
@@ -366,145 +354,39 @@ export default function GamesSection() {
             />
             <button
               onClick={() => setShowLabsVideo(false)}
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                color: '#fff',
-                border: '2px solid #fff',
-                borderRadius: '50%',
-                width: '36px',
-                height: '36px',
-                cursor: 'pointer',
-                fontSize: '18px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              ✕
-            </button>
+              className="absolute top-2 right-2 bg-black/75 text-white border-2 border-white rounded-full w-9 h-9 flex items-center justify-center"
+            >✕</button>
           </div>
         </div>
       )}
 
-      {/* Slideshow Modal */}
       {showSlideshow && (
         <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.9)',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          className="fixed inset-0 bg-black/90 flex items-center justify-center z-[2000]"
           onClick={() => setShowSlideshow(false)}
         >
           <div
-            style={{
-              position: 'relative',
-              maxWidth: '90vw',
-              maxHeight: '80vh'
-            }}
+            className="relative"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={slideshowImages[currentSlide]}
               alt={`Slide ${currentSlide + 1}`}
-              style={{
-                maxWidth: '90vw',
-                maxHeight: '80vh',
-                objectFit: 'contain',
-                borderRadius: '16px',
-                border: '3px solid #000',
-                boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
-              }}
+              className="max-w-[90vw] max-h-[80vh] object-contain rounded-2xl border-3 border-black shadow-2xl"
             />
-            {/* Previous Button */}
             <button
               onClick={() => setCurrentSlide((prev) => (prev === 0 ? slideshowImages.length - 1 : prev - 1))}
-              style={{
-                position: 'absolute',
-                left: '-60px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                color: '#fb8500',
-                border: '2px solid #fb8500',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                fontSize: '24px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              ‹
-            </button>
-            {/* Next Button */}
+              className="absolute -left-16 top-1/2 -translate-y-1/2 text-[#fb8500] text-4xl"
+            >‹</button>
             <button
               onClick={() => setCurrentSlide((prev) => (prev === slideshowImages.length - 1 ? 0 : prev + 1))}
-              style={{
-                position: 'absolute',
-                right: '-60px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                color: '#fb8500',
-                border: '2px solid #fb8500',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                fontSize: '24px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              ›
-            </button>
-            {/* Close Button */}
+              className="absolute -right-16 top-1/2 -translate-y-1/2 text-[#fb8500] text-4xl"
+            >›</button>
             <button
               onClick={() => setShowSlideshow(false)}
-              style={{
-                position: 'absolute',
-                top: '-20px',
-                right: '-20px',
-                backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                color: '#fff',
-                border: '2px solid #fff',
-                borderRadius: '50%',
-                width: '40px',
-                height: '40px',
-                cursor: 'pointer',
-                fontSize: '20px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              ✕
-            </button>
-            {/* Slide Counter */}
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '-40px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                color: '#fb8500',
-                fontSize: '1rem'
-              }}
-            >
+              className="absolute -top-10 -right-10 text-white text-3xl"
+            >✕</button>
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[#fb8500]">
               {currentSlide + 1} / {slideshowImages.length}
             </div>
           </div>
