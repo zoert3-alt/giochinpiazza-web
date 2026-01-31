@@ -38,58 +38,40 @@ export default function Navbar() {
         }`}
     >
       <div className="container-custom">
-        <div className="flex items-center justify-between md:justify-center h-20">
-          {/* Mobile Brand */}
-          <div className="md:hidden">
-            <span className="text-terracotta-600 font-bold text-xl">GiochInPiazza</span>
+        <div className="flex items-center justify-between h-20">
+          {/* Brand */}
+          <div className="flex-shrink-0">
+            <span className="text-terracotta-600 font-bold text-xl uppercase tracking-tighter">GiochInPiazza</span>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4 flex-wrap justify-center">
-            {navItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => scrollToSection(item.href)}
-                className="nav-link py-2 text-sm"
-              >
-                {item.label}
-              </button>
-            ))}
-            <button
-              onClick={() => scrollToSection('#contatti')}
-              className="btn-primary py-2 px-4 text-sm"
-            >
-              Richiedi Preventivo
-            </button>
-          </div>
-
-          {/* Mobile Toggle */}
-          <div className="md:hidden">
+          {/* Hamburger Toggle - Always visible */}
+          <div className="flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-terracotta-600"
+              className="p-2 text-terracotta-600 outline-none flex items-center transition-transform active:scale-90"
+              aria-label="Toggle Menu"
             >
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              {isMenuOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Unified Dropdown Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white/95 border-t border-gray-100 pb-6 animate-in slide-in-from-top duration-300">
-            <div className="flex flex-col gap-4 p-4">
+          <div className="bg-white/95 border-t border-gray-100 pb-8 animate-in slide-in-from-top duration-300">
+            <div className="flex flex-col gap-4 p-6 max-w-md mx-auto">
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollToSection(item.href)}
-                  className="py-3 text-lg font-bold text-terracotta-600 border-b border-gray-50 text-left"
+                  className="py-4 text-xl font-bold text-terracotta-600 border-b border-gray-100 text-center hover:bg-orange-50 transition-colors rounded-lg"
                 >
                   {item.label}
                 </button>
               ))}
               <button
                 onClick={() => scrollToSection('#contatti')}
-                className="btn-primary w-full py-4 text-lg mt-2"
+                className="btn-primary w-full py-5 text-xl mt-4"
               >
                 Richiedi Preventivo
               </button>
