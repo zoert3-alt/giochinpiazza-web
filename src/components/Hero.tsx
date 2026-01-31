@@ -171,17 +171,19 @@ export default function Hero() {
           </motion.div>
 
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4 bg-black/85 backdrop-blur-md rounded-[2rem] p-8 sm:p-12 border-2 border-white shadow-[0_0_30px_rgba(251,133,0,0.4)]"
-          >
-            <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
-            <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
-            <StatCounter end={50000} suffix="+" label="Partecipanti Felici" />
-            <StatCounter end={15} suffix="+" label="Anni di Esperienza" />
-          </motion.div>
+          <div className="px-2 sm:px-0">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-4 bg-black/80 backdrop-blur-md rounded-[2.5rem] p-10 sm:p-14 border-2 border-white shadow-[0_0_40px_rgba(251,133,0,0.5)]"
+            >
+              <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
+              <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
+              <StatCounter end={50000} suffix="+" label="Partecipanti Felici" />
+              <StatCounter end={15} suffix="+" label="Anni di Esperienza" />
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
