@@ -183,8 +183,8 @@ export default function GamesSection() {
               onMouseEnter={() => setHoveredCategory(category)}
               onMouseLeave={() => setHoveredCategory(null)}
               className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
-                  ? 'bg-gradient-warm text-white shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
+                ? 'bg-gradient-warm text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
                 }`}
             >
               {category}
@@ -193,6 +193,7 @@ export default function GamesSection() {
           {hoveredCategory === 'Abilità' && (
             <>
               <div
+                className="hidden md:block"
                 style={{
                   position: 'fixed',
                   top: '50%',
@@ -215,6 +216,7 @@ export default function GamesSection() {
                 />
               </div>
               <div
+                className="hidden md:block"
                 style={{
                   position: 'fixed',
                   top: '50%',
