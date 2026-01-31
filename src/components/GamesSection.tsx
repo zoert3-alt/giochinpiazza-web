@@ -213,31 +213,25 @@ export default function GamesSection() {
             </button>
           ))}
           {showAbilitaGifs && (
-            <>
-              {/* Layout Desktop: Alterna tra sinistra e destra */}
-              <div className="hidden md:block">
+            <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
+              {/* Desktop View */}
+              <div className="hidden md:block w-full h-full relative">
                 <AnimatePresence mode="wait">
                   {activeGifIndex === 0 ? (
                     <motion.div
-                      key="left"
+                      key="desktop-left"
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
-                      style={{
-                        position: 'fixed',
-                        top: '50%',
-                        left: '5%',
-                        transform: 'translateY(-50%)',
-                        zIndex: 200,
-                        pointerEvents: 'none'
-                      }}
+                      className="absolute top-1/2 left-[5%] -translate-y-1/2"
                     >
                       <img
                         src="/images/games/abilita-hover-left.gif"
                         alt="Abilità"
                         style={{
                           width: '350px',
-                          height: 'auto',
+                          height: '622px',
+                          objectFit: 'cover',
                           borderRadius: '16px',
                           border: '3px solid #000',
                           boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
@@ -246,25 +240,19 @@ export default function GamesSection() {
                     </motion.div>
                   ) : (
                     <motion.div
-                      key="right"
+                      key="desktop-right"
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
-                      style={{
-                        position: 'fixed',
-                        top: '50%',
-                        right: '5%',
-                        transform: 'translateY(-50%)',
-                        zIndex: 200,
-                        pointerEvents: 'none'
-                      }}
+                      className="absolute top-1/2 right-[5%] -translate-y-1/2"
                     >
                       <img
                         src="/images/games/abilita-hover.gif"
                         alt="Abilità"
                         style={{
                           width: '350px',
-                          height: 'auto',
+                          height: '622px',
+                          objectFit: 'cover',
                           borderRadius: '16px',
                           border: '3px solid #000',
                           boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
@@ -275,22 +263,11 @@ export default function GamesSection() {
                 </AnimatePresence>
               </div>
 
-              {/* Layout Mobile: Alterna al centro dello schermo */}
-              <div
-                className="md:hidden"
-                style={{
-                  position: 'fixed',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  zIndex: 200,
-                  pointerEvents: 'none',
-                  width: '85vw'
-                }}
-              >
+              {/* Mobile View */}
+              <div className="md:hidden flex items-center justify-center w-full h-full">
                 <AnimatePresence mode="wait">
                   <motion.img
-                    key={activeGifIndex === 0 ? "mob-left" : "mob-right"}
+                    key={activeGifIndex === 0 ? "mobile-left" : "mobile-right"}
                     src={activeGifIndex === 0 ? "/images/games/abilita-hover-left.gif" : "/images/games/abilita-hover.gif"}
                     alt="Abilità"
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -298,8 +275,10 @@ export default function GamesSection() {
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{ duration: 0.4 }}
                     style={{
-                      width: '100%',
+                      width: '85vw',
                       height: 'auto',
+                      maxHeight: '70vh',
+                      objectFit: 'contain',
                       borderRadius: '16px',
                       border: '3px solid #000',
                       boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
@@ -307,7 +286,7 @@ export default function GamesSection() {
                   />
                 </AnimatePresence>
               </div>
-            </>
+            </div>
           )}
           {hoveredCategory === 'Labs' && (
             <div
