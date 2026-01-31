@@ -139,9 +139,9 @@ export default function GamesSection() {
         const timer2 = setTimeout(() => {
           setShowAbilitaGifs(false)
           setActiveGifIndex(0)
-        }, 4000)
+        }, 3450) // Durata originale della seconda GIF
         return () => clearTimeout(timer2)
-      }, 4000)
+      }, 2650) // Durata originale della prima GIF
       return () => clearTimeout(timer1)
     }
   }, [showAbilitaGifs])
