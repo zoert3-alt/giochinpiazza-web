@@ -132,13 +132,17 @@ export default function GamesSection() {
   const [showAbilitaGifs, setShowAbilitaGifs] = useState(false)
 
   useEffect(() => {
-    let interval: number
     if (showAbilitaGifs) {
-      interval = window.setInterval(() => {
-        setActiveGifIndex((prev) => (prev === 0 ? 1 : 0))
+      setActiveGifIndex(0)
+      const timer1 = setTimeout(() => {
+        setActiveGifIndex(1)
+        const timer2 = setTimeout(() => {
+          setShowAbilitaGifs(false)
+        }, 2500)
+        return () => clearTimeout(timer2)
       }, 2500)
+      return () => clearTimeout(timer1)
     }
-    return () => clearInterval(interval)
   }, [showAbilitaGifs])
 
   const filteredGames = selectedCategory === 'Esempi'
@@ -231,7 +235,7 @@ export default function GamesSection() {
                         src="/images/games/abilita-hover-left.gif"
                         alt="Abilità"
                         style={{
-                          maxWidth: '400px',
+                          maxWidth: '280px',
                           height: 'auto',
                           borderRadius: '16px',
                           border: '3px solid #000',
@@ -258,7 +262,7 @@ export default function GamesSection() {
                         src="/images/games/abilita-hover.gif"
                         alt="Abilità"
                         style={{
-                          maxWidth: '400px',
+                          maxWidth: '280px',
                           height: 'auto',
                           borderRadius: '16px',
                           border: '3px solid #000',
