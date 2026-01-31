@@ -38,14 +38,14 @@ export default function Navbar() {
         }`}
     >
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo/Title for Mobile */}
-          <div className="flex-shrink-0 md:hidden">
-            <span className="text-terracotta-600 font-bold text-xl uppercase tracking-tighter shadow-sm">GiochInPiazza</span>
+        <div className="flex items-center justify-between md:justify-center h-20">
+          {/* Mobile Brand */}
+          <div className="md:hidden">
+            <span className="text-terracotta-600 font-bold text-xl">GiochInPiazza</span>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4 justify-center w-full">
+          <div className="hidden md:flex items-center gap-4 flex-wrap justify-center">
             {navItems.map((item) => (
               <button
                 key={item.label}
@@ -63,26 +63,26 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Toggle */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-terracotta-600 outline-none flex items-center"
+              className="p-2 text-terracotta-600"
             >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Dropdown */}
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 pb-6 animate-in slide-in-from-top duration-300">
+          <div className="md:hidden bg-white/95 border-t border-gray-100 pb-6 animate-in slide-in-from-top duration-300">
             <div className="flex flex-col gap-4 p-4">
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollToSection(item.href)}
-                  className="py-3 text-lg font-bold text-terracotta-600 border-b border-gray-100 text-left"
+                  className="py-3 text-lg font-bold text-terracotta-600 border-b border-gray-50 text-left"
                 >
                   {item.label}
                 </button>

@@ -234,33 +234,24 @@
     box-shadow: 0 0 10px #fb8500 !important;
   }
 
-  /* --- REGOLE MOBILE (SOLO PER SCHERMI < 768px) --- */
+  /* MEDIA QUERIES PER MOBILE - NON TOCCARE LE REGOLE SOPRA */
   @media (max-width: 768px) {
-    body {
-      font-size: 1.1rem !important;
-    }
-
     h1 {
-      font-size: 2.5rem !important;
+      font-size: 2.2rem !important;
     }
 
     h2 {
-      font-size: 2rem !important;
+      font-size: 1.8rem !important;
     }
 
     p {
-      font-size: 1.1rem !important;
+      font-size: 1rem !important;
     }
 
     .section-padding {
       padding: 40px 0 !important;
     }
 
-    .container-custom {
-      padding: 0 16px !important;
-    }
-
-    /* Evita stretching immagini su mobile */
     img {
       max-width: 100% !important;
       height: auto !important;

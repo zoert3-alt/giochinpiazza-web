@@ -50,18 +50,21 @@ function StatCounter({ end, suffix = '', label }: StatCounterProps) {
   }, [isVisible, end])
 
   return (
-    <div ref={ref} className="flex flex-col items-center justify-center p-4 sm:p-6">
+    <div ref={ref} className="text-center p-2 sm:p-4">
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         viewport={{ once: true }}
-        className="text-3xl sm:text-5xl font-extrabold mb-1 tracking-tight text-[#fb8500]"
+        style={{
+          fontWeight: 700,
+          marginBottom: '0.5rem',
+          color: '#fb8500'
+        }}
+        className="text-2xl sm:text-4xl"
       >
         {count.toLocaleString()}{suffix}
       </motion.div>
-      <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#fb8500] text-center opacity-90">
-        {label}
-      </div>
+      <div style={{ fontWeight: 500, color: '#fb8500' }} className="text-[10px] sm:text-base">{label}</div>
     </div>
   )
 }
@@ -208,7 +211,16 @@ export default function Hero() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-10 bg-black/85 backdrop-blur-sm rounded-[2rem] p-6 sm:p-12 border-2 border-white shadow-[0_0_20px_#fff,0_0_30px_#fb8500,0_0_40px_#fb8500]"
+              style={{
+                display: 'grid',
+                gap: '1.5rem',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                borderRadius: '16px',
+                padding: '2rem',
+                border: '2px solid white',
+                boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+              }}
+              className="grid-cols-2 lg:grid-cols-4"
             >
               <StatCounter end={500} suffix="+" label="Eventi Realizzati" />
               <StatCounter end={25} suffix="+" label="Giochi Tradizionali" />
