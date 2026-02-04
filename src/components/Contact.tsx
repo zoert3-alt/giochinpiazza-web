@@ -303,7 +303,7 @@ export default function Contact() {
           >
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contatti Diretti</h3>
-              <ul className="space-y-4">
+              <ul className="space-y-6">
                 <li
                   style={{ position: 'relative' }}
                   onMouseEnter={() => setIsPhoneHovered(true)}
