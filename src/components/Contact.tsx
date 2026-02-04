@@ -303,10 +303,9 @@ export default function Contact() {
           >
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contatti Diretti</h3>
-              <div className="flex flex-col space-y-6 md:space-y-4">
+              <div className="space-y-4">
                 <div
-                  className="block md:inline-block"
-                  style={{ position: 'relative' }}
+                  style={{ position: 'relative', display: 'inline-block' }}
                   onMouseEnter={() => setIsPhoneHovered(true)}
                   onMouseLeave={() => setIsPhoneHovered(false)}
                 >
@@ -353,8 +352,7 @@ export default function Contact() {
                   Seguici su Facebook
                 </a>
                 <div
-                  className="block md:inline-block"
-                  style={{ position: 'relative' }}
+                  style={{ position: 'relative', display: 'inline-block' }}
                   onMouseEnter={() => setIsMapHovered(true)}
                   onMouseLeave={() => setIsMapHovered(false)}
                 >
