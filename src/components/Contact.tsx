@@ -303,9 +303,9 @@ export default function Contact() {
           >
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contatti Diretti</h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li
-                  style={{ position: 'relative', marginBottom: '20px' }}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div
+                  style={{ position: 'relative' }}
                   onMouseEnter={() => setIsPhoneHovered(true)}
                   onMouseLeave={() => setIsPhoneHovered(false)}
                 >
@@ -339,13 +339,13 @@ export default function Contact() {
                       />
                     </div>
                   )}
-                </li>
-                <li style={{ marginBottom: '20px' }}>
+                </div>
+                <div>
                   <a href="mailto:zoert3@gmail.com?subject=Informazioni%20Evento%20-%20GiochInPiazza" className="text-gray-700 hover:text-terracotta-600 transition-colors">
                     zoert3@gmail.com
                   </a>
-                </li>
-                <li style={{ marginBottom: '20px' }}>
+                </div>
+                <div>
                   <a
                     href="https://facebook.com/gi0chinpiazza"
                     target="_blank"
@@ -354,8 +354,8 @@ export default function Contact() {
                   >
                     Seguici su Facebook
                   </a>
-                </li>
-                <li
+                </div>
+                <div
                   style={{ position: 'relative' }}
                   onMouseEnter={() => setIsMapHovered(true)}
                   onMouseLeave={() => setIsMapHovered(false)}
@@ -398,8 +398,8 @@ export default function Contact() {
                       </div>
                     </div>
                   )}
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
 
             <div className="bg-gradient-to-br from-terracotta-50 to-ochre-50 rounded-2xl p-6 border border-terracotta-100">
