@@ -303,9 +303,9 @@ export default function Contact() {
           >
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contatti Diretti</h3>
-              <div className="space-y-4">
-                <div
-                  style={{ position: 'relative', display: 'inline-block' }}
+              <ul className="space-y-3">
+                <li
+                  style={{ position: 'relative' }}
                   onMouseEnter={() => setIsPhoneHovered(true)}
                   onMouseLeave={() => setIsPhoneHovered(false)}
                 >
@@ -313,7 +313,7 @@ export default function Contact() {
                     href="https://wa.me/393714204934?text=Ciao!%20Vorrei%20ricevere%20informazioni%20sui%20vostri%20giochi%20per%20un%20evento."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-gray-700 hover:text-terracotta-600 transition-colors"
+                    className="text-gray-700 hover:text-terracotta-600 transition-colors"
                   >
                     +39 371 420 4934
                   </a>
@@ -339,20 +339,24 @@ export default function Contact() {
                       />
                     </div>
                   )}
-                </div>
-                <a href="mailto:zoert3@gmail.com?subject=Informazioni%20Evento%20-%20GiochInPiazza" className="block text-gray-700 hover:text-terracotta-600 transition-colors">
-                  zoert3@gmail.com
-                </a>
-                <a
-                  href="https://facebook.com/gi0chinpiazza"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-gray-700 hover:text-terracotta-600 transition-colors"
-                >
-                  Seguici su Facebook
-                </a>
-                <div
-                  style={{ position: 'relative', display: 'inline-block' }}
+                </li>
+                <li>
+                  <a href="mailto:zoert3@gmail.com?subject=Informazioni%20Evento%20-%20GiochInPiazza" className="text-gray-700 hover:text-terracotta-600 transition-colors">
+                    zoert3@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://facebook.com/gi0chinpiazza"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-700 hover:text-terracotta-600 transition-colors"
+                  >
+                    Seguici su Facebook
+                  </a>
+                </li>
+                <li
+                  style={{ position: 'relative' }}
                   onMouseEnter={() => setIsMapHovered(true)}
                   onMouseLeave={() => setIsMapHovered(false)}
                 >
@@ -394,8 +398,8 @@ export default function Contact() {
                       </div>
                     </div>
                   )}
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
 
             <div className="bg-gradient-to-br from-terracotta-50 to-ochre-50 rounded-2xl p-6 border border-terracotta-100">
