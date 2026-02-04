@@ -303,9 +303,9 @@ export default function Contact() {
           >
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contatti Diretti</h3>
-              <ul className="space-y-6">
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 <li
-                  style={{ position: 'relative' }}
+                  style={{ position: 'relative', marginBottom: '20px' }}
                   onMouseEnter={() => setIsPhoneHovered(true)}
                   onMouseLeave={() => setIsPhoneHovered(false)}
                 >
@@ -340,12 +340,12 @@ export default function Contact() {
                     </div>
                   )}
                 </li>
-                <li>
+                <li style={{ marginBottom: '20px' }}>
                   <a href="mailto:zoert3@gmail.com?subject=Informazioni%20Evento%20-%20GiochInPiazza" className="text-gray-700 hover:text-terracotta-600 transition-colors">
                     zoert3@gmail.com
                   </a>
                 </li>
-                <li>
+                <li style={{ marginBottom: '20px' }}>
                   <a
                     href="https://facebook.com/gi0chinpiazza"
                     target="_blank"
