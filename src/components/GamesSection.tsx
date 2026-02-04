@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface GameCardProps {
@@ -129,6 +129,39 @@ export default function GamesSection() {
   const [showSlideshow, setShowSlideshow] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
 
+  // Mobile detection and GIF state
+  const [isMobile, setIsMobile] = useState(false)
+  const [showMobileGif, setShowMobileGif] = useState(false)
+  const [currentGifIndex, setCurrentGifIndex] = useState(0)
+
+  const mobileGifs = [
+    { src: '/images/games/abilita-hover.gif', duration: 5000 },
+    { src: '/images/games/abilita-hover-left.gif', duration: 5000 }
+  ]
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Auto-advance GIFs on mobile
+  useEffect(() => {
+    if (showMobileGif && isMobile) {
+      const timer = setTimeout(() => {
+        if (currentGifIndex < mobileGifs.length - 1) {
+          setCurrentGifIndex(prev => prev + 1)
+        } else {
+          // Both GIFs played, close the modal
+          setShowMobileGif(false)
+          setCurrentGifIndex(0)
+        }
+      }, mobileGifs[currentGifIndex].duration)
+      return () => clearTimeout(timer)
+    }
+  }, [showMobileGif, currentGifIndex, isMobile])
+
   const filteredGames = selectedCategory === 'Esempi'
     ? games
     : games.filter(game => game.category === selectedCategory)
@@ -176,6 +209,10 @@ export default function GamesSection() {
                   setSelectedCategory('Esempi')
                 } else if (category === 'Info') {
                   scrollToContact()
+                } else if (category === 'Abilità' && isMobile) {
+                  setShowMobileGif(true)
+                  setCurrentGifIndex(0)
+                  setSelectedCategory(category)
                 } else {
                   setSelectedCategory(category)
                 }
@@ -183,14 +220,14 @@ export default function GamesSection() {
               onMouseEnter={() => setHoveredCategory(category)}
               onMouseLeave={() => setHoveredCategory(null)}
               className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
-                  ? 'bg-gradient-warm text-white shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
+                ? 'bg-gradient-warm text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200 hover:border-terracotta-300'
                 }`}
             >
               {category}
             </button>
           ))}
-          {hoveredCategory === 'Abilità' && (
+          {hoveredCategory === 'Abilità' && !isMobile && !showMobileGif && (
             <>
               <div
                 style={{
@@ -475,6 +512,88 @@ export default function GamesSection() {
               }}
             >
               {currentSlide + 1} / {slideshowImages.length}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile GIF Modal */}
+      {showMobileGif && isMobile && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          onClick={() => {
+            setShowMobileGif(false)
+            setCurrentGifIndex(0)
+          }}
+        >
+          <div
+            style={{
+              position: 'relative',
+              maxWidth: '90vw',
+              maxHeight: '80vh'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={mobileGifs[currentGifIndex].src}
+              alt={`Abilità GIF ${currentGifIndex + 1}`}
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '70vh',
+                objectFit: 'contain',
+                borderRadius: '16px',
+                border: '3px solid #000',
+                boxShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fb8500, 0 0 40px #fb8500'
+              }}
+            />
+            {/* Close Button */}
+            <button
+              onClick={() => {
+                setShowMobileGif(false)
+                setCurrentGifIndex(0)
+              }}
+              style={{
+                position: 'absolute',
+                top: '-15px',
+                right: '-15px',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                color: '#fff',
+                border: '2px solid #fff',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                cursor: 'pointer',
+                fontSize: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ✕
+            </button>
+            {/* GIF Counter */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '-35px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                color: '#fb8500',
+                fontSize: '0.9rem'
+              }}
+            >
+              {currentGifIndex + 1} / {mobileGifs.length}
             </div>
           </div>
         </div>
