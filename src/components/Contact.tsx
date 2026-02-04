@@ -303,9 +303,9 @@ export default function Contact() {
           >
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contatti Diretti</h3>
-              <div className="space-y-4">
+              <div className="space-y-6 md:space-y-4">
                 <div
-                  style={{ position: 'relative', display: 'inline-block' }}
+                  style={{ position: 'relative' }}
                   onMouseEnter={() => setIsPhoneHovered(true)}
                   onMouseLeave={() => setIsPhoneHovered(false)}
                 >
@@ -352,12 +352,12 @@ export default function Contact() {
                   Seguici su Facebook
                 </a>
                 <div
-                  style={{ position: 'relative', display: 'inline-block' }}
+                  style={{ position: 'relative' }}
                   onMouseEnter={() => setIsMapHovered(true)}
                   onMouseLeave={() => setIsMapHovered(false)}
                 >
                   <span
-                    className="event-badge"
+                    className="event-badge inline-block"
                     style={{ cursor: 'pointer' }}
                   >
                     Operiamo in tutta Italia
